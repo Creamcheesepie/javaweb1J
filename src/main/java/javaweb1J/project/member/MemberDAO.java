@@ -14,7 +14,8 @@ public class MemberDAO {
 	private ResultSet rs = null;
 	
 	private String sql ="";
-
+	
+	// 아이디를 기준으로 모든 데이터를 가져오는 메소드
 	public MemberVO getMidCheckAllInfo(String mid) {
 		MemberVO vo = new MemberVO();
 		
@@ -53,14 +54,15 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			System.out.println("sql 오류 : " +e.getMessage());
 		} finally {
-			getConn.pstmtClose();
+			getConn.rsClose();
 		}
 
 		return vo;
 	}
-
+	
+	//닉네임을 기준으로 모든 데이터를 가져오는 메소드
 	public MemberVO getNickNameCheckAllInfo(String nickName) {
-MemberVO vo = new MemberVO();
+		MemberVO vo = new MemberVO();
 		
 		try {
 			sql = "select * from member where nickName =? ";
@@ -97,10 +99,43 @@ MemberVO vo = new MemberVO();
 		} catch (SQLException e) {
 			System.out.println("sql 오류 : " +e.getMessage());
 		} finally {
-			getConn.pstmtClose();
+			getConn.rsClose();
 		}
 
 		return vo;
+	}
+	
+	// 회원가입 메소드.
+	public boolean setNewMemberData(MemberVO vo) {
+		boolean check = false;
+		try {
+			sql = "insert into member values (default,?,?,?,?,?"
+					+ ",?,?,?,?,?"
+					+ ",?,?,?,?"
+					+ ",default,default,default,default,default,default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getMid());
+			pstmt.setString(2, vo.getSalt());
+			pstmt.setString(3, vo.getPwd());
+			pstmt.setString(4, vo.getName());
+			pstmt.setString(5, vo.getNickName());
+			pstmt.setString(6, vo.getEmail());
+			pstmt.setString(7, vo.getTel());
+			pstmt.setString(8, vo.getBirthday());
+			pstmt.setInt(9, vo.getAge());
+			pstmt.setString(10, vo.getGender());
+			pstmt.setString(11, vo.getAddress());
+			pstmt.setString(12, vo.getRideInfo());
+			pstmt.setString(13, vo.getInst());
+			pstmt.setString(14, vo.getPhoto());
+			pstmt.executeUpdate();
+			check = true;
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " +e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return check;
 	}
 	
 	

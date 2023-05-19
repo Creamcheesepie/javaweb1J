@@ -35,7 +35,7 @@ public class SignInCheckCommand implements projectInterface {
 		String address = mpr.getParameter("address")==null?"":mpr.getParameter("address");
 		String rideInfo = mpr.getParameter("rideInfo")==null?"":mpr.getParameter("rideInfo");
 		String inst = mpr.getParameter("inst")==null?"":mpr.getParameter("inst");
-		String photo = mpr.getParameter("photo")==null?"":mpr.getParameter("photo");
+		String photo = mpr.getFilesystemName("photo")==null?"noimage.jpg":mpr.getFilesystemName("photo");
 		
 		SecurityUtil security = new SecurityUtil();
 		MemberDAO dao = new MemberDAO();
@@ -65,6 +65,7 @@ public class SignInCheckCommand implements projectInterface {
 		pwd = security.encryptSHA256(pwd);
 		
 		//vo에 데이터 넣기
+		vo = new MemberVO();
 		vo.setMid(mid);
 		vo.setSalt(salt);
 		vo.setPwd(pwd);
@@ -80,9 +81,16 @@ public class SignInCheckCommand implements projectInterface {
 		vo.setInst(inst);
 		vo.setPhoto(photo);
 		
+		boolean check = dao.setNewMemberData(vo);
 		
-		
-		
+		if(check) {
+			request.setAttribute("msg", "환영합니다."+nickName+"("+mid+")님 회원 가입을 환영합니다.");
+			request.setAttribute("url",request.getContextPath()+"/memberLogin.sc");
+		}
+		else {
+			request.setAttribute("msg", "죄송합니다. 오류가 발생하여 현재 회원가입되지 않았습니다.\n 동일한 오류가 반복되면 운영자 또는 관리자에게 문의 주시기 바랍니다.");
+			request.setAttribute("url",request.getContextPath()+"/memberSignin.sc");
+		}
 		
 	}
 

@@ -31,7 +31,17 @@ public class controller extends HttpServlet{
 			command.execute(request, response);
 			viewPage ="/include/message.jsp";
 		}
-			
+		else if(com.equals("/memberIdCheck")) {
+			command = new memberIdCheckCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/memberNickNameCheck")) {
+			command = new memberNickNameCheckCommand();
+			command.execute(request, response);
+			return;
+		}
+		
 		
 		
 		

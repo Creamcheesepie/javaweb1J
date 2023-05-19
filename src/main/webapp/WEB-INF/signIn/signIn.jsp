@@ -173,25 +173,37 @@
 	//아이디 중복검사
 	function midCheck(){
 		let mid = signInForm.mid.value;
-		let url = "${ctp}/MemberIdCheck.mem?mid="+mid;
-		
 		
 		if(mid.trim()==""){
 			alert("아이디를 입력하세요!");
 			signInForm.mid.focus();
 		}
 		else{
-			idCheckSw = 1 ;
-			signInForm.mid.readOnly="true";
-			window.open(url,"nWin","width=580px,height=250px");
+			$.ajax({
+				type:"post",
+				url:"${ctp}/memberIdCheck.cp",
+				data :{mid:mid},
+				success : function(res){
+					if(res=="1"){
+						alert("중복된 아이디가 없습니다.");
+						idCheckSw = 1;
+						signInForm.pwd.focus();
+					}
+					else{
+						alert("중복된 아이디가 있습니다. 다른 아이디를 입력하여 주세요.");
+					}
+				},
+				error : function(){
+						alert("전송오류가 발생하였습니다. 잠시 후 다시 이용하여 주세요.");	
+				}
+			})
 		}
-		
 	}//아이디 중복검사 끝
 	
 	//닉네임 중복검사
 	function nickNameCheck(){
 		let nickName = signInForm.nickName.value;
-		let url = "${ctp}/MemberNickNameCheck.mem?nickName="+nickName;
+		let url = "${ctp}/memberNickNameCheck.cp?nickName="+nickName;
 		
 		
 		if(nickName.trim()==""){
@@ -199,9 +211,24 @@
 			signInForm.nickName.focus();
 		}
 		else{
-			nickCheckSw = 1;
-			signInForm.nickName.readOnly="true";
-			window.open(url,"nWin","width=580px,height=250px");
+			$.ajax({
+				type:"post",
+				url:"${ctp}/memberNickNameCheck.cp",
+				data :{nickName:nickName},
+				success : function(res){
+					if(res=="1"){
+						alert("중복된 닉네임이 없습니다.");
+						idCheckSw = 1;
+						signInForm.pwd.focus();
+					}
+					else{
+						alert("중복된 닉네임이 있습니다. 다른 닉네임을 입력하여 주세요.");
+					}
+				},
+				error : function(){
+						alert("전송오류가 발생하였습니다. 잠시 후 다시 이용하여 주세요.");	
+				}
+			})
 		}
 	}//닉네임 중복검사 끝
 	
