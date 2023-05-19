@@ -15,22 +15,39 @@
     width: 100%;
     height: 100%;
   }
+  .front_article{
+  	font-size:14px;
+  }
+  
 	</style>
 </head>
 <body>
 <jsp:include page="/include/header.jsp"/>	
-	<div class="container">
+	<div class="container mt-3">
 		<div class="row" style="height:475px">
 			<div class="col-sm-3"> <!-- 왼쪽 회원정보 표시기 // 로그인 안한 상태에선 뭐 띄움? -->
-				<c:if test="${sMid==null}">
-					<div></div>
-				</c:if>
-				<c:if test="">
-					로그인 후 멤버 정보 올리기
-				</c:if>
-			</div>
-			<div class="col-sm-9" > <!-- 오른쪽 자전거 이미지 표시기 -->
-			<div id="demo" class="carousel slide" data-ride="carousel">
+				<div class="row"> <!-- 개인정보/모임일정 표시 영역 -->
+					<div class="col" style="height:200px"><!-- 개인정보 표시 영역 -->
+						<c:if test="${sMid==null}">
+							<h4>회원정보</h4>
+							<hr/>
+							로그인 해주세요!
+						</c:if>
+						<c:if test="">
+							로그인 후 멤버 정보 올리기
+						</c:if>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col" style="height:275px"><!-- 일정표 표시 영역 -->
+						<p>모임 일정</p>
+						<hr/>
+						
+					</div><!-- 일정표 표시 영역 끝 -->
+				</div>
+			</div><!-- 개인정보/모임일정 표시 영역끝 -->
+			<div class="col-sm-9" > <!-- 카로셀 이미지 표시 영역 시작 -->
+			<div id="demo" class="carousel slide" data-ride="carousel"><!-- 카로셀 -->
 			  <!-- 아래 항목 표시기 -->
 			  <ul class="carousel-indicators">
 			    <li data-target="#demo" data-slide-to="0" class="active"></li>
@@ -57,12 +74,28 @@
 			  <a class="carousel-control-next" href="#demo" data-slide="next">
 			    <span class="carousel-control-next-icon"></span>
 			  </a>
-			</div>
-			</div>
+			</div><!-- 카로셀 끝 -->
+			</div><!-- 카로셀 그리드 영역 끝 -->
 		</div>
-		<div>최신글</div>
+		<div class="mt-2">
+		<h2>최신글</h2> <!--  -->
+		<hr style="margin:8px"/>
+		<div class="row text-center mt-0">
+			<div class="col-sm-1 front_article">번호</div>
+			<div class="col-sm-1 front_article">카테고리</div>
+			<div class="col-sm-2 front_article">작성자</div>
+			<div class="col-sm-5 front_article">제목</div>
+			<div class="col-sm-1 front_article">추천</div>
+			<div class="col-sm-1 front_article">작성시간</div>
+			<div class="col-sm-1 front_article">조회</div>
+		<hr/>
+		</div>
+		<div>
+			<c:forEach var="vo" items="${vos}" varStatus="st">
+			</c:forEach>
+		</div>
 	</div>
-	
+</div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp"/>
 </body>

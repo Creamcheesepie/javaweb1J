@@ -3,7 +3,7 @@
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	  <!-- <a class="navbar-brand" href="http://localhost:9090/javaweb/">home</a> -->
-	  <a class="navbar-brand" href="http://192.168.50.88:9090/javaweb/">Ride together</a>
+	  <a class="navbar-brand" href="${ctp}/">Ride together</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
@@ -23,7 +23,7 @@
 	        <a class="nav-link" href="#">로그인</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">회원가입</a>
+	        <a class="nav-link" href="${ctp}/signInPage.cp">회원가입</a>
 	      </li>
 	      </c:if>
 	      <c:if test="${sLoginOK=='ok'}">
