@@ -64,6 +64,24 @@ public class SignInCheckCommand implements projectInterface {
 		pwd = salt+pwd;
 		pwd = security.encryptSHA256(pwd);
 		
+		//vo에 데이터 넣기
+		vo.setMid(mid);
+		vo.setSalt(salt);
+		vo.setPwd(pwd);
+		vo.setName(name);
+		vo.setNickName(nickName);
+		vo.setEmail(email);		
+		vo.setTel(tel);
+		vo.setBirthday(birthday);
+		vo.setAge(age);
+		vo.setGender(gender);
+		vo.setAddress(address);
+		vo.setRideInfo(rideInfo);
+		vo.setInst(inst);
+		vo.setPhoto(photo);
+		
+		
+		
 		
 		
 	}
