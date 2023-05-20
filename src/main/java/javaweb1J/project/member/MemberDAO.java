@@ -138,6 +138,35 @@ public class MemberDAO {
 		return check;
 	}
 	
+	public void setTodayLoginUpdate(int idx) {
+		try {
+			sql="update member set todayCnt=todayCnt+1,lastVisit=now() where idx=?";
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " +e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
+
+
+	public void setInitializationTodayCnt(int idx) {
+		try {
+			sql="update member set totCnt=totCnt+1,todayCnt=0 where idx=?";
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " +e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
+	
 	
 	
 	

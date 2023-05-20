@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import javaweb1J.project.member.SignInCheckCommand;
+import javaweb1J.project.member.loginCheckCommand;
+import javaweb1J.project.member.memberIdCheckCommand;
+import javaweb1J.project.member.memberLogoutCommand;
+import javaweb1J.project.member.memberNickNameCheckCommand;
 
 @SuppressWarnings("serial")
 @WebServlet("*.cp")
@@ -41,7 +45,16 @@ public class controller extends HttpServlet{
 			command.execute(request, response);
 			return;
 		}
-		
+		else if(com.equals("/loginCheck")) {
+			command = new loginCheckCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/memberLogout")) {
+			command = new memberLogoutCommand();
+			command.execute(request, response);
+			viewPage ="/include/message.jsp";
+		}
 		
 		
 		

@@ -33,8 +33,18 @@
 							<hr/>
 							로그인 해주세요!
 						</c:if>
-						<c:if test="">
-							로그인 후 멤버 정보 올리기
+						<c:if test="${sMid!=null}">
+							<h4>회원정보</h4>
+							<hr/>
+							<div name="memberInfo" id="memberInfo">
+							아이디 : ${sMid}<br/>
+							닉네임 : ${sNickName}<br/>
+							등급 : ${sMemberGrade}<br/> <!-- 회원 등급 표시시에는 sMembergrade로, 다른 기타 함수에서 사용시에는 sLevel 사용 -->
+							출석일수 : ${sTotCnt}<br/>
+							이전접속시간 : ${sLastVisit}
+							<br/>
+							<!-- 일단 여기까지 표시해놓고 필요에 따라 데이터 표시 추가. -->
+							</div>
 						</c:if>
 					</div>
 				</div>
@@ -77,7 +87,7 @@
 			</div><!-- 카로셀 끝 -->
 			</div><!-- 카로셀 그리드 영역 끝 -->
 		</div>
-		<div class="mt-2">
+		<div class="mt-2"><!-- 최신글 영역 그리드 시작 -->
 		<h2>최신글</h2> <!--  -->
 		<hr style="margin:8px"/>
 		<div class="row text-center mt-0">
@@ -94,8 +104,8 @@
 			<c:forEach var="vo" items="${vos}" varStatus="st">
 			</c:forEach>
 		</div>
-	</div>
-</div>
+	</div><!-- 최신 글 영역 그리드 끝 -->
+</div><!-- 인덱스 컨테이너 div 끝 -->
 <p><br/></p>
 <jsp:include page="/include/footer.jsp"/>
 </body>

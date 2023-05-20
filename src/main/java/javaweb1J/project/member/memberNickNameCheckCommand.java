@@ -1,4 +1,4 @@
-package javaweb1J.project;
+package javaweb1J.project.member;
 
 import java.io.IOException;
 
@@ -6,25 +6,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javaweb1J.project.member.MemberDAO;
-import javaweb1J.project.member.MemberVO;
+import javaweb1J.project.projectInterface;
 
-public class memberIdCheckCommand implements projectInterface {
+public class memberNickNameCheckCommand implements projectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String mid = request.getParameter("mid")==null?"":request.getParameter("mid");
+		String nickName = request.getParameter("nickName")==null?"":request.getParameter("nickName");
 		
 		MemberDAO dao = new MemberDAO();
 		MemberVO vo =  new MemberVO();
-		vo = dao.getMidCheckAllInfo(mid);
+		vo = dao.getNickNameCheckAllInfo(nickName);
 		
 		String res="0";
 		
-		if(vo.getMid()==null) res="1";
+		if(vo.getNickName()==null) res="1";
 		
 		
 		response.getWriter().write(res);
+
 	}
 
 }

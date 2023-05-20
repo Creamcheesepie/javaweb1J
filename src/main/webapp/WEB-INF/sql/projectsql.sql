@@ -15,7 +15,7 @@ create table member(
 	age 				int not null,						/* 나이 */
 	gender 			varchar(10) not null,		/* 성별 */
 	
-	address			varchar(30) not null,		/* 주소 */
+	address			varchar(200) not null,		/* 주소 너무 작아서 입력 안되는 경우 있으니 늘려서 다시 테이블 넣기*/
 	rideInfo 		varchar(50) not null,		/* 라이딩 정보, 각 정보를 /로 구분하여 입력 */
 	inst 				text not null,					/* 자기소개 */
 	photo				varchar(20),						/* 프로필 사진 */

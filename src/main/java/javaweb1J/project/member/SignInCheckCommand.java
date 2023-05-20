@@ -27,7 +27,7 @@ public class SignInCheckCommand implements projectInterface {
 		String pwd = mpr.getParameter("pwd")==null?"":mpr.getParameter("pwd");
 		String nickName = mpr.getParameter("nickName")==null?"":mpr.getParameter("nickName");
 		String name = mpr.getParameter("name")==null?"":mpr.getParameter("name");
-		String email = mpr.getParameter("email")==null?"":mpr.getParameter("email");
+		String email = mpr.getParameter("fullEmail")==null?"":mpr.getParameter("fullEmail");
 		String tel = mpr.getParameter("tel")==null?"":mpr.getParameter("tel");
 		String birthday = mpr.getParameter("birthday")==null?"":mpr.getParameter("birthday");
 		int age = mpr.getParameter("age")==null?0:Integer.parseInt(mpr.getParameter("age")); 
@@ -85,13 +85,13 @@ public class SignInCheckCommand implements projectInterface {
 		
 		if(check) {
 			request.setAttribute("msg", "환영합니다."+nickName+"("+mid+")님 회원 가입을 환영합니다.");
-			request.setAttribute("url",request.getContextPath()+"/memberLogin.sc");
+			request.setAttribute("url",request.getContextPath()+"/");
 		}
 		else {
 			request.setAttribute("msg", "죄송합니다. 오류가 발생하여 현재 회원가입되지 않았습니다.\n 동일한 오류가 반복되면 운영자 또는 관리자에게 문의 주시기 바랍니다.");
 			request.setAttribute("url",request.getContextPath()+"/memberSignin.sc");
 		}
 		
-	}
+	}//DAO execute 메소드 끝(헷갈리니까 적어줌)
 
 }

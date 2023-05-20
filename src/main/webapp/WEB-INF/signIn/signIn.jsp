@@ -9,6 +9,7 @@
 	<title>title</title>
 	<jsp:include page="/include/bs4.jsp"/>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="${ctp}/js/postCodeFind.js"></script>
 	<script>
 	'use strict';
 	//아이디와 중복버튼을 클릭햇는지의 여부를 확인하기위한 변수(버튼 클릭 후에는 내용 수정시 다시 중복 확인을 시키도록 만들기)
@@ -34,6 +35,7 @@
 	function signInCheck(){
 		let mid = signInForm.mid.value.trim();
 		let pwd = signInForm.pwd.value.trim();
+		let rePwd = signInForm.rePwd.value.trim();
 		let nickName = signInForm.nickName.value.trim();
 		let name = signInForm.name.value.trim();
 		let email = signInForm.email.value.trim();
@@ -48,6 +50,7 @@
 		
 		let midOk = "false";
 		let pwdOk = "false";
+		let rePwdOk = "false";
 		let nickNameOk = "false";
 		let nameOk = "false";
 		let emailOk = "false";
@@ -74,7 +77,7 @@
 			midOk="true";
 		}
 		
-		//비밀먼호 검사
+		//비밀번호 검사
 		if(pwd==""){
 			alert("비밀번호를 입력하세요!");
 			signInForm.pwd.focus();
@@ -87,6 +90,20 @@
 		}else{
 			pwdOk="true";
 		}
+		
+		if(rePwd==""){
+			alert("비밀번호 확인창을 입력하세요!");
+			signInForm.rePwd.focus();
+			return false;
+		}
+		else if(pwd!=rePwd){
+			alert("비밀번호와 비밀번호 확인창의 값은 같아야합니다!");
+			signInForm.rePwd.focus();
+			return false;
+		}else{
+			rePwdOk="true";
+		}
+		
 		
 		//닉네임 검사
 		if(nickName==""){
@@ -143,6 +160,20 @@
 		}
 		
 		//이메일 검사
+		let fullEmail = email+domain;
+		
+		if(email==""){
+			alert("이메일을 입력하세요!");
+			signInForm.name.focus();
+			return false;
+		}
+		else if(!emailRegEx.test(fullEmail)){
+			alert("이메일 입력을 제대로 하셨는지 확인해 주세요. \n 우리 사이트는 @앞의 이름만 입력하시면 됩니다.");
+			signInForm.nickName.focus();
+			return false;
+		}else{
+			emailOk="true";			
+		}
 		
 		//전화번호 검사
 		
@@ -161,7 +192,7 @@
 			alert("아이디 중복체크 버튼을 눌러주세요")
 			document.getElementById("nickNameBtn").focus();
 		}
-		else if(midOk=="true" && pwdOk=="true" && nickNameOk=="true" && nameOk=="true" && emailOk=="true" ){
+		else if(midOk=="true" && pwdOk=="true" && rePwdOk=="true" && nickNameOk=="true" && nameOk=="true" && emailOk =="true" ){
 			
 			
 			signInForm.submit();
@@ -171,10 +202,11 @@
 	}//회원가입 체크 함수 끝
 	
 	//아이디 중복검사
+	let checkMid = "";
 	function midCheck(){
-		let mid = signInForm.mid.value;
+		checkMid = signInForm.mid.value;
 		
-		if(mid.trim()==""){
+		if(checkMid.trim()==""){
 			alert("아이디를 입력하세요!");
 			signInForm.mid.focus();
 		}
@@ -182,12 +214,13 @@
 			$.ajax({
 				type:"post",
 				url:"${ctp}/memberIdCheck.cp",
-				data :{mid:mid},
+				data :{mid:checkMid},
 				success : function(res){
 					if(res=="1"){
 						alert("중복된 아이디가 없습니다.");
-						idCheckSw = 1;
+						idCheckSw = "1";
 						signInForm.pwd.focus();
+						$("#idCheckIndicator").html('<font color="red">확인완료!</font>');
 					}
 					else{
 						alert("중복된 아이디가 있습니다. 다른 아이디를 입력하여 주세요.");
@@ -201,12 +234,13 @@
 	}//아이디 중복검사 끝
 	
 	//닉네임 중복검사
+	let checkNick = "";
 	function nickNameCheck(){
-		let nickName = signInForm.nickName.value;
+		checkNick = signInForm.nickName.value;
 		let url = "${ctp}/memberNickNameCheck.cp?nickName="+nickName;
 		
 		
-		if(nickName.trim()==""){
+		if(checkNick.trim()==""){
 			alert("닉네임을 입력하세요!");
 			signInForm.nickName.focus();
 		}
@@ -214,12 +248,13 @@
 			$.ajax({
 				type:"post",
 				url:"${ctp}/memberNickNameCheck.cp",
-				data :{nickName:nickName},
+				data :{nickName:checkNick},
 				success : function(res){
 					if(res=="1"){
 						alert("중복된 닉네임이 없습니다.");
-						idCheckSw = 1;
-						signInForm.pwd.focus();
+						nickCheckSw = "1";
+						signInForm.email.focus();
+						$("#nickCheckIndicator").html('<font color="red">확인완료!</font>');
 					}
 					else{
 						alert("중복된 닉네임이 있습니다. 다른 닉네임을 입력하여 주세요.");
@@ -232,6 +267,30 @@
 		}
 	}//닉네임 중복검사 끝
 	
+	//중복검사 후 내용 수정시 다시 검사하게 하기
+	function midCheckReset(){
+		let inputAgainMid = signInForm.mid.value;
+		if(checkMid == inputAgainMid && checkMid.trim()!=""){
+			$("#idCheckIndicator").html('<font color="red">확인완료!</font>');
+			idCheckSw = "1";
+		}
+		else{
+			$("#idCheckIndicator").html('중복확인');
+			idCheckSw = "0";
+		}
+	}
+	
+	function nickCheckReset(){
+		let inputAgainNick = signInForm.nickName.value;
+		if(checkNick == inputAgainNick && checkNick.trim()!="" ){
+			$("#nickCheckIndicator").html('<font color="red">확인완료!</font>');
+			idCheckSw = "1";
+		}
+		else{
+			$("#nickCheckIndicator").html('중복확인');
+			idCheckSw = "0";
+		}
+	}
 	
 	</script>
 </head>
@@ -239,7 +298,7 @@
 <jsp:include page="/include/header.jsp"/>
 <p><br/></p>	
 	<div class="container">
-	<form name="signInForm" id="signInForm" type="post" action="${ctp}/signInCheck.cp" enctype="multipart/form-data">
+	<form name="signInForm" id="signInForm" method="post" action="${ctp}/signInCheck.cp" enctype="multipart/form-data">
 		<div class="row">
 			<div class="col text-center mt-3"><h2>회원가입</h2></div>
 		</div>
@@ -247,10 +306,10 @@
 			<div class="col-sm-3"></div>
 			<div class="col-sm-4">
 				&nbsp;아이디
-				<input type="text" name="mid" id="mid" placeholder="아이디를 입력해주세요." class="form-control" />
+				<input type="text" name="mid" id="mid" placeholder="아이디를 입력해주세요." onkeyup="midCheckReset()" class="form-control" />
 			</div>
 			<div class="col-sm-2 pl-0 pr-3">
-			&nbsp;
+				&nbsp;<span name="idCheckIndicator" id="idCheckIndicator"></span>
 				<input type="button" value="중복확인" onclick="midCheck()" class="form-control btn btn-info"  style="align-self: bottom">
 			</div>
 			<div class="col-sm-3"></div>
@@ -283,10 +342,10 @@
 			<div class="col-sm-3"></div>
 			<div class="col-sm-4">
 				&nbsp;닉네임
-				<input type="text" name="nickName" id="nickName" placeholder="닉네임을 입력해주세요." class="form-control" />
+				<input type="text" name="nickName" id="nickName" onkeyup="nickCheckReset()" placeholder="닉네임을 입력해주세요." class="form-control" />
 			</div>
 			<div class="col-sm-2 pl-0 pr-3">
-			&nbsp;
+			&nbsp;<span name="nickCheckIndicator" id="nickCheckIndicator"></span>
 				<input type="button" value="중복확인" onclick="nickNameCheck()" class="form-control btn btn-info"  style="align-self: bottom">
 			</div>
 			<div class="col-sm-3"></div>
@@ -305,6 +364,7 @@
 					<option>@hanmail.net</option>
 					<option>@yahoo.com</option>
 				</select>
+				<input type="hidden" name="fullEmail" id="fullEmail"/>
 			</div>
 			<div class="col-sm-3"></div>
 		</div><!-- div가로 한 덩어리 끝 -->
