@@ -164,14 +164,15 @@
 		
 		if(email==""){
 			alert("이메일을 입력하세요!");
-			signInForm.name.focus();
+			signInForm.email.focus();
 			return false;
 		}
 		else if(!emailRegEx.test(fullEmail)){
 			alert("이메일 입력을 제대로 하셨는지 확인해 주세요. \n 우리 사이트는 @앞의 이름만 입력하시면 됩니다.");
-			signInForm.nickName.focus();
+			signInForm.email.focus();
 			return false;
 		}else{
+			signInForm.fullEmail.value = fullEmail;
 			emailOk="true";			
 		}
 		

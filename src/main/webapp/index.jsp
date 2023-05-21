@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Ride together</title>
-	<jsp:include page="/include/bs4.jsp"/>
 	<jsp:include page="/include/cssInitialize.jsp"/>
 	<style>	
   /* Make the image fully responsive */
@@ -20,8 +19,9 @@
   }
   
 	</style>
+ <jsp:include page="/include/bs4.jsp"/>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/header.jsp"/>	
 	<div class="container mt-3">
 		<div class="row" style="height:475px">
@@ -48,9 +48,9 @@
 						</c:if>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mt-2">
 					<div class="col" style="height:275px"><!-- 일정표 표시 영역 -->
-						<p>모임 일정</p>
+						<h4>모임 일정</h4>
 						<hr/>
 						
 					</div><!-- 일정표 표시 영역 끝 -->

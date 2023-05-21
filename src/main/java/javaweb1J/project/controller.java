@@ -9,11 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javaweb1J.project.member.MemberPwdResetCheckCommand;
+import javaweb1J.project.member.MidFinderCommand;
 import javaweb1J.project.member.SignInCheckCommand;
 import javaweb1J.project.member.loginCheckCommand;
 import javaweb1J.project.member.memberIdCheckCommand;
 import javaweb1J.project.member.memberLogoutCommand;
 import javaweb1J.project.member.memberNickNameCheckCommand;
+import javaweb1J.project.member.memberPwdResetOkCommand;
 
 @SuppressWarnings("serial")
 @WebServlet("*.cp")
@@ -50,12 +53,32 @@ public class controller extends HttpServlet{
 			command.execute(request, response);
 			return;
 		}
+		else if(com.equals("/midFinder")) {
+			command = new MidFinderCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/memberPwdResetCheck")) {
+			command = new MemberPwdResetCheckCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/memberPwdResetOk")) {
+			command = new memberPwdResetOkCommand();
+			command.execute(request, response);
+			return;
+		}
 		else if(com.equals("/memberLogout")) {
 			command = new memberLogoutCommand();
 			command.execute(request, response);
 			viewPage ="/include/message.jsp";
 		}
-		
+		else if(com.equals("/memberIdFind")) {
+			viewPage +="/memberInfo/memberMidFind.jsp";
+		}
+		else if(com.equals("/memberPwdFind")) {
+			viewPage +="/memberInfo/memberPwdFind.jsp";
+		}
 		
 		
 		

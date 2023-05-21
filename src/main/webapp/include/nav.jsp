@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
+<%-- <jsp:include page="/include/bs4.jsp"/> --%>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-<jsp:include page="/include/bs4.jsp"/>
 <script>
 	'use strict';
 	
@@ -69,13 +69,14 @@
 	      <li class="nav-item">
 	        <a class="nav-link" href="${ctp}/memberLogout.cp">로그아웃</a>
 	      </li>
-	      <li>
+	      <li class="nav-item dropdown" >
 			  <div class="dropdown">
-			  	<button type="button" class="btn text-light dropdown-toggle" data-toggle="dropdown">개인정보</button>
+			  	<button type="button" class="btn nav-link text-light dropdown-toggle" id="navbardrop" data-toggle="dropdown">개인정보</button>
 			   	<div class="dropdown-menu">
-			      <a class="dropdown-item" href="#">회원정보수정</a>
-			      <a class="dropdown-item" href="#">회원목록</a>
-			      <a class="dropdown-item" href="#">회원탈퇴</a>
+			      <a class="dropdown-item" href="#">내 정보</a>
+			      <a class="dropdown-item" href="#">친구목록</a>
+			      <a class="dropdown-item" href="#">쪽지함</a>
+			      <a class="dropdown-item" href="#">내 글 관리</a>
 			    </div>
 			  </div>  
 	      </li>

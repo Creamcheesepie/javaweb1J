@@ -166,6 +166,46 @@ public class MemberDAO {
 		}
 		
 	}
+
+	public String getMidByEmail(String email) {
+		String mid="";
+		try {
+			sql="select mid from member where email=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				mid = rs.getString("mid");
+			}
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " +e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+		return mid;
+	}
+
+	public String setPwdSaltReset(MemberVO vo) {
+		String res ="0";
+		try {
+			sql="update member set salt=?,pwd=? where idx=?";
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getSalt());
+			pstmt.setString(2, vo.getPwd());
+			pstmt.setInt(3, vo.getIdx());
+			pstmt.executeUpdate();
+			
+			res="1";
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " +e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+		return res;
+	}
 	
 	
 	
