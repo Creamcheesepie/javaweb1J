@@ -6,9 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javaweb1J.project.projectInterface;
+import javaweb1J.project.ProjectInterface;
 
-public class MidFinderCommand implements projectInterface {
+public class MidFinderCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

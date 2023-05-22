@@ -192,7 +192,7 @@
       	상기한 이유로 비밀번호를 초기화 하여야 합니다.<br/>
       	<div class="mt-2">
 	        비밀번호 <br/>
-	        <input type="text" name="resetPwd" id="resetPwd" placeholder="비밀번호를 입력하세요." class="form-control mt-2 mb-2"/>
+	        <input type="password" name="resetPwd" id="resetPwd" placeholder="비밀번호를 입력하세요." class="form-control mt-2 mb-2"/>
 	        비밀번호 확인<br/>
 	        <input type="password" name="resetPwdCheck" id="resetPwdCheck" placeholder="비밀번호를 다시 입력하세요." class="form-control mt-2 mb-2"/>
 				</div>

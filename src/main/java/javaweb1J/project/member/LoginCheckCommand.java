@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import conn.SecurityUtil;
-import javaweb1J.project.projectInterface;
+import javaweb1J.project.ProjectInterface;
 
-public class loginCheckCommand implements projectInterface {
+public class LoginCheckCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -77,6 +77,7 @@ public class loginCheckCommand implements projectInterface {
 						break;
 				}
 				
+				session.setAttribute("sMIdx", vo.getIdx());
 				session.setAttribute("sMid", mid);
 				session.setAttribute("sNickName", vo.getNickName());
 				session.setAttribute("sLevel", vo.getLevel());

@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import javaweb1J.project.projectInterface;
+import javaweb1J.project.ProjectInterface;
 
-public class memberLogoutCommand implements projectInterface {
+public class memberLogoutCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

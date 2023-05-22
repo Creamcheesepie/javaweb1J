@@ -6,6 +6,7 @@
 <script>
 	'use strict';
 	
+	
 	function loginCheck(){
 		let mid = $("#mid").val();
 		let pwd = $("#pwd").val();
@@ -49,10 +50,13 @@
 	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
 	    <ul class="navbar-nav">
 	      <li class="nav-item">
-	        <a class="nav-link" href="${ctp}/GuestList.gu">출석 한마디</a>
+	        <a class="nav-link" href="${ctp}/todayAttendMentList.cp">출석 한마디</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="${ctp}/BoardList.bo">게시판</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="${ctp}/BoardList.bo">모임일정</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="${ctp}/BoardList.bo">갤러리</a>
@@ -73,7 +77,7 @@
 			  <div class="dropdown">
 			  	<button type="button" class="btn nav-link text-light dropdown-toggle" id="navbardrop" data-toggle="dropdown">개인정보</button>
 			   	<div class="dropdown-menu">
-			      <a class="dropdown-item" href="#">내 정보</a>
+			      <a class="dropdown-item" href="${ctp}/myInfoView.cp">내 정보</a>
 			      <a class="dropdown-item" href="#">친구목록</a>
 			      <a class="dropdown-item" href="#">쪽지함</a>
 			      <a class="dropdown-item" href="#">내 글 관리</a>
@@ -84,7 +88,7 @@
 	    </ul>
 	  </div>
 	</nav>
-	
+<c:if test="${sLoginOK!='ok'}">	
 <div><!-- 모달 영역 div -->
 <div class="modal fade" id="loginModal">
   <div class="modal-dialog modal-dialog-centered">
@@ -118,3 +122,4 @@
   </div>
 </div>
 </div><!-- 모달 영역 div 끝 -->
+</c:if>

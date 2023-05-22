@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import conn.SecurityUtil;
-import javaweb1J.project.projectInterface;
+import javaweb1J.project.ProjectInterface;
 
-public class memberPwdResetOkCommand implements projectInterface {
+public class memberPwdResetOkCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

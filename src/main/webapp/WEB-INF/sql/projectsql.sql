@@ -29,3 +29,22 @@ create table member(
 )
 desc member;
 drop table member;
+
+drop table todayAttendMent
+create table todayAttendMent(
+	idx					int not null auto_increment,
+	mIdx		int not null,
+	title				varchar(20) not null,
+	article			varchar(300) not null,
+	wDate				datetime default now(),
+	hostIp			varchar(30) not null,
+	primary key(idx),
+	foreign key(mIdx) references member(idx)
+	on update cascade
+	on delete restrict
+);
+desc todayAttendMent;
+
+select *, (select nickName from member where idx=tam.midx)as aNickName, (select mid from member where idx=tam.midx)as aMid from todayAttendMent tam;
+
+select * from todayAttendMent where date_format(wDate,'%Y-%m-%d')="2023-05-22";

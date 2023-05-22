@@ -6,32 +6,33 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import conn.SecurityUtil;
 import javaweb1J.project.ProjectInterface;
 
-public class MemberPwdResetCheckCommand implements ProjectInterface {
+public class myInfoUpdatePwdCheckCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email =  request.getParameter("email")==null?"":request.getParameter("email");
 		String mid = request.getParameter("mid")==null?"":request.getParameter("mid");
-		System.out.println(email+mid);
-		
+		String pwd = request.getParameter("pwd")==null?"":request.getParameter("pwd");
 		
 		MemberDAO dao = new MemberDAO();
-		MemberVO vo = new MemberVO();
+		MemberVO vo = dao.getMidCheckAllInfo(mid);
+		SecurityUtil security = new SecurityUtil();
 		
-		String midByEmail = dao.getMidByEmail(email);
-		vo = dao.getMidCheckAllInfo(mid);
-		String emailByMid = vo.getEmail();
+		String salt = vo.getSalt();
 		
-		String res="";
+		pwd = salt+pwd;
+		pwd = security.encryptSHA256(pwd);
 		
-		if(email.equals(emailByMid) && mid.equals(midByEmail) ) {
+		String res= "0";
+		if(pwd.equals(vo.getPwd())) {
 			res="1";
 		}
 		
 		response.getWriter().write(res);
-
+				
+		
 	}
 
 }
