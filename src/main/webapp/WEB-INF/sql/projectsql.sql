@@ -48,3 +48,32 @@ desc todayAttendMent;
 select *, (select nickName from member where idx=tam.midx)as aNickName, (select mid from member where idx=tam.midx)as aMid from todayAttendMent tam;
 
 select * from todayAttendMent where date_format(wDate,'%Y-%m-%d')="2023-05-22";
+
+
+create table board(
+	idx					int not null auto_increment,
+	title 			varchar(30) not null,
+	mIdx				int not null,
+	wDate				datetime not null default now(),
+	hostIp			varchar(20) not null,
+	category		char(2) not null,
+	viewCnt			int,
+	recommend 	int,
+	primary key(idx),
+	foreign key(mIdx) references member(idx)
+	on update cascade
+	on delete restrict
+);
+desc board;
+
+create table articleRecommend(
+	bIdx		int not null,
+	mIdx		int not null,
+	foreign key(mIdx) references member(idx)
+	on update cascade
+	on delete restrict,
+	foreign key(bIdx) references board(idx)
+	on update cascade
+	on delete restrict
+);
+desc articleRecommend;

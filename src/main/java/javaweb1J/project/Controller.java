@@ -14,6 +14,7 @@ import javaweb1J.project.member.MemberMyInfoUpdateFormCommand;
 import javaweb1J.project.member.MemberPwdResetCheckCommand;
 import javaweb1J.project.member.MidFinderCommand;
 import javaweb1J.project.member.SignInCheckCommand;
+import javaweb1J.project.board.BoardListCommand;
 import javaweb1J.project.member.LoginCheckCommand;
 import javaweb1J.project.member.memberIdCheckCommand;
 import javaweb1J.project.member.memberLogoutCommand;
@@ -21,6 +22,9 @@ import javaweb1J.project.member.memberMyInfoUpdateCommand;
 import javaweb1J.project.member.memberNickNameCheckCommand;
 import javaweb1J.project.member.memberPwdResetOkCommand;
 import javaweb1J.project.member.myInfoUpdatePwdCheckCommand;
+import javaweb1J.project.todayAttendMent.TodayArticleWriteCommand;
+import javaweb1J.project.todayAttendMent.TodayAttendMentChangeCommand;
+import javaweb1J.project.todayAttendMent.TodayAttendMentDeleteCommand;
 import javaweb1J.project.todayAttendMent.TodayAttendMentListCommand;
 
 @SuppressWarnings("serial")
@@ -125,7 +129,11 @@ public class Controller extends HttpServlet{
 			command.execute(request, response);
 			return;
 		}
-		
+		else if(com.equals("/boardList")) { //내 정보 수정하는 폼 에 데이터 츌력
+			command = new BoardListCommand();
+			command.execute(request, response);
+			viewPage +="/board/boardList.jsp";
+		}
 		
 		
 		

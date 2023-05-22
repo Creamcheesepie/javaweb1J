@@ -1,4 +1,4 @@
-package javaweb1J.project;
+package javaweb1J.project.todayAttendMent;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import javaweb1J.project.todayAttendMent.TodayAttendMentDAO;
-import javaweb1J.project.todayAttendMent.TodayAttendMentVO;
+import javaweb1J.project.ProjectInterface;
 
 public class TodayArticleWriteCommand implements ProjectInterface {
 

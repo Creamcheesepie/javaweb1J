@@ -123,14 +123,14 @@
 <p><br/></p>	
 	<div class="container">
 		<div class="text-center mt-3 mb-3" style="height:70px"><h4>출석 한마디</h4></div>
-		<div class="row text-center"><!-- 큰 한 덩어리 시작 -->			
+		<div class="row "><!-- 큰 한 덩어리 시작 -->			
 			<div class="col-sm-2"><!-- 내 정보 표시창 -->
 				<c:if test="${sMid==null}">
 				<h5>로그인 하셔야</h5>
 				<h5>출석하실 수 있습니다.</h5>
 				</c:if>
 				<c:if test="${sMid!=null}">
-				<h4>회원정보</h4>
+				<h4>내 정보</h4>
 				아이디 : ${sMid}<br/>
 				닉네임 : ${sNickName}<br/>
 				등급 : ${sMemberGrade}<br/> <!-- 회원 등급 표시시에는 sMembergrade로, 다른 기타 함수에서 사용시에는 sLevel 사용 -->
@@ -138,7 +138,7 @@
 				</c:if>
 			</div>
 			<div class="col-sm-10 p-0"><!-- 게시판리스트 보여주는 공간 -->
-				<div class="row mb-0 p-0"><!-- 서브 타이틀 공간 -->
+				<div class="row mb-0 p-0 text-center"><!-- 서브 타이틀 공간 -->
 					<div class="col-sm-1 align-self-center p-0"> 
 					
 						<select name="pageSize" id="pageSize" onchange="pageCheck()">

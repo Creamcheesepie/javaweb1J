@@ -24,7 +24,7 @@ public class memberNickNameCheckCommand implements ProjectInterface {
 		
 		
 		response.getWriter().write(res);
-
+		
 	}
 
 }

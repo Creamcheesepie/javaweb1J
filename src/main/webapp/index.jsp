@@ -29,12 +29,12 @@
 				<div class="row"> <!-- 개인정보/모임일정 표시 영역 -->
 					<div class="col" style="height:200px"><!-- 개인정보 표시 영역 -->
 						<c:if test="${sMid==null}">
-							<h4>회원정보</h4>
+							<h4>내 정보</h4>
 							<hr/>
 							로그인 해주세요!
 						</c:if>
 						<c:if test="${sMid!=null}">
-							<h4>회원정보</h4>
+							<h4>내 정보</h4>
 							<hr/>
 							<div name="memberInfo" id="memberInfo">
 							아이디 : ${sMid}<br/>

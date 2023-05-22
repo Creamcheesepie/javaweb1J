@@ -53,7 +53,7 @@
 	        <a class="nav-link" href="${ctp}/todayAttendMentList.cp">출석 한마디</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="${ctp}/BoardList.bo">게시판</a>
+	        <a class="nav-link" href="${ctp}/boardList.cp">게시판</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="${ctp}/BoardList.bo">모임일정</a>
