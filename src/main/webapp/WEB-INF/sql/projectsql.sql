@@ -52,21 +52,26 @@ select * from todayAttendMent where date_format(wDate,'%Y-%m-%d')="2023-05-22";
 
 create table board(
 	idx					int not null auto_increment,
-	title 			varchar(30) not null,
 	mIdx				int not null,
+	title 			varchar(30) not null,
+	article			text not null,
 	wDate				datetime not null default now(),
 	hostIp			varchar(20) not null,
 	category		char(2) not null,
-	viewCnt			int,
-	recommend 	int,
+	viewCnt			int default 0,
+	recommend 	int default 0,
 	primary key(idx),
 	foreign key(mIdx) references member(idx)
 	on update cascade
 	on delete restrict
 );
+drop table board;
 desc board;
 
-create table articleRecommend(
+insert into board values(default,1,'안녕','테스트야',default,'192.168.0.1','관리',default,default);
+select * from board where midx=1 and title='안녕' order by idx desc limit 1;
+
+create table boardRecommend(
 	bIdx		int not null,
 	mIdx		int not null,
 	foreign key(mIdx) references member(idx)
@@ -76,4 +81,21 @@ create table articleRecommend(
 	on update cascade
 	on delete restrict
 );
-desc articleRecommend;
+desc boardRecommend;
+drop table boardRecommend;
+
+create table b_reple(
+	idx				int not null auto_increment primary key,
+	bIdx			int not null,
+	mIdx			int not null,
+	reple			varchar(300) not null,
+	wTime datetime not null default now(),
+	foreign key(bIdx) references board(idx)
+	on update cascade
+	on delete restrict,
+	foreign key(mIdx) references member(idx)
+	on update cascade
+	on delete restrict
+);
+desc b_reple;
+drop table b_reple;

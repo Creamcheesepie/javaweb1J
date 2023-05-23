@@ -16,7 +16,7 @@ public class BoardListCommand implements ProjectInterface {
 		BoardDAO dao =  new BoardDAO();
 		
 		int nowPage = request.getParameter("nowPage")==null?1:Integer.parseInt(request.getParameter("nowPage"));
-		int pageSize = request.getParameter("pageSize")==null?5:Integer.parseInt(request.getParameter("pageSize"));
+		int pageSize = request.getParameter("pageSize")==null?10:Integer.parseInt(request.getParameter("pageSize"));
 		
 		int trc = dao.getTotalRecordCount();
 		
@@ -32,9 +32,9 @@ public class BoardListCommand implements ProjectInterface {
 		
 		request.setAttribute("vos", vos);
 		request.setAttribute("nowPage", nowPage);
+		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("cSSNo", cSSNo);
-		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);

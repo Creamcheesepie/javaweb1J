@@ -1,3 +1,4 @@
+
 package javaweb1J.project;
 
 import java.io.IOException;
@@ -14,7 +15,13 @@ import javaweb1J.project.member.MemberMyInfoUpdateFormCommand;
 import javaweb1J.project.member.MemberPwdResetCheckCommand;
 import javaweb1J.project.member.MidFinderCommand;
 import javaweb1J.project.member.SignInCheckCommand;
+import javaweb1J.project.b_Reple.repleWriteOkCommand;
+import javaweb1J.project.board.BoardChagneFormCommand;
+import javaweb1J.project.board.BoardChangeOkCommand;
 import javaweb1J.project.board.BoardListCommand;
+import javaweb1J.project.board.BoardReadFormCommand;
+import javaweb1J.project.board.BoardWriteFormCommand;
+import javaweb1J.project.board.BoardWriteOkCommand;
 import javaweb1J.project.member.LoginCheckCommand;
 import javaweb1J.project.member.memberIdCheckCommand;
 import javaweb1J.project.member.memberLogoutCommand;
@@ -129,12 +136,42 @@ public class Controller extends HttpServlet{
 			command.execute(request, response);
 			return;
 		}
-		else if(com.equals("/boardList")) { //내 정보 수정하는 폼 에 데이터 츌력
+		else if(com.equals("/boardList")) { 
 			command = new BoardListCommand();
 			command.execute(request, response);
 			viewPage +="/board/boardList.jsp";
 		}
-		
+		else if(com.equals("/boardWriteFrom")) { //게시판 글 쓰는 폼
+			command = new BoardWriteFormCommand();
+			command.execute(request, response);
+			viewPage +="/board/boardWrite.jsp";
+		}
+		else if(com.equals("/boardWriteOk")) { //게시판 글 업로드
+			command = new BoardWriteOkCommand();
+			command.execute(request, response);
+			viewPage ="/include/message.jsp";
+		}
+		else if(com.equals("/boardRead")) { 
+			command = new BoardReadFormCommand();
+			command.execute(request, response);
+			viewPage +="/board/boardRead.jsp";
+		}
+		else if(com.equals("/repleWriteOk")) {
+			command = new repleWriteOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/boardChagneForm")) { 
+			command = new BoardChagneFormCommand();
+			command.execute(request, response);
+			viewPage +="/board/boardChangeForm.jsp";
+		}
+		else if(com.equals("/boardChangeOk")) { //게시판 글 수정
+			command = new BoardChangeOkCommand();
+			command.execute(request, response);
+			viewPage ="/include/message.jsp";
+		}
+				
 		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

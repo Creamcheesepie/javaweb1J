@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -8,6 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>게시판</title>
 	<jsp:include page="/include/bs4.jsp"/>
+	<style>
+	hr{
+		margin:8px 0px 8px 0px;
+	}
+	</style>
 	<script>
 	'use strict'
 	
@@ -40,8 +46,17 @@
 						<option <c:if test="${pageSize==30}">selected</c:if>>30</option>
 					</select>
 					개
-					<input type="button" value="글쓰기" onclick="" class="btn btn-success"/>
+					<c:if test="${sLoginOK=='ok'}">
+					<input type="button" value="글쓰기" onclick="location.href='${ctp}/boardWriteFrom.cp?nowPage=${nowPage}&pageSize=${pageSize}'" class="btn btn-success"/>
+					</c:if>
 					</div>
+				</div>
+				<div class="row text-center mt-1">
+					<div class="col-sm-1">일상</div>
+					<div class="col-sm-1">정보</div>
+					<div class="col-sm-1">후기</div>
+					<div class="col-sm-1">질문</div>
+					<div class="col-sm-8"></div>
 				</div>
 				<hr/>
 				<div class="row text-center">
@@ -49,20 +64,22 @@
 					<div class="col-sm-1">분류</div>
 					<div class="col-sm-2">작성자</div>
 					<div class="col-sm-4">제목</div>
-					<div class="col-sm-2">작성시간</div>
+					<div class="col-sm-2">작성일자</div>
 					<div class="col-sm-1">추천수</div>
 					<div class="col-sm-1">조회수</div>
 				</div>
+				<hr/>
 				<c:forEach var="vo" items="${vos}" varStatus="st">
 				<div class="row text-center">
-					<div class="col-sm-1">${vo.idx}</div>
-					<div class="col-sm-1">${vo.category}</div>
-					<div class="col-sm-2">${vo.aNickName}</div>
-					<div class="col-sm-4">${vo.title}</div>
-					<div class="col-sm-2">${vo.wDate}</div>
-					<div class="col-sm-1">${vo.recommend}</div>
-					<div class="col-sm-1">${vo.viewCnt}</div>
+					<div class="col-sm-1 align-self-center">${vo.idx}</div>
+					<div class="col-sm-1 align-self-center">${vo.category}</div>
+					<div class="col-sm-2 align-self-center">${vo.aNickName}</div>
+					<div class="col-sm-4 align-self-center"><a href="${ctp}/boardRead.cp?idx=${vo.idx}&pageSize=${pageSize}&nowPage=${nowPage}">${vo.title}</a></div>
+					<div class="col-sm-2 align-self-center">${fn:substring(vo.wDate,0,10)}</div>
+					<div class="col-sm-1 align-self-center">${vo.recommend}</div>
+					<div class="col-sm-1 align-self-center">${vo.viewCnt}</div>
 				</div>
+				<hr/>
 				</c:forEach>
 				<div class="row text-center">
 					<div class="col">

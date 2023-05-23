@@ -2,8 +2,9 @@ package javaweb1J.project.board;
 
 public class BoardVO {
 	private int idx;
-	private String title;
 	private int mIdx;
+	private String title;
+	private String article;
 	private String wDate;
 	private String hostIp;
 	private String category;
@@ -12,12 +13,17 @@ public class BoardVO {
 	
 	private String aMid;
 	private String aNickName;
-	
 	public int getIdx() {
 		return idx;
 	}
 	public void setIdx(int idx) {
 		this.idx = idx;
+	}
+	public int getmIdx() {
+		return mIdx;
+	}
+	public void setmIdx(int mIdx) {
+		this.mIdx = mIdx;
 	}
 	public String getTitle() {
 		return title;
@@ -25,11 +31,11 @@ public class BoardVO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public int getmIdx() {
-		return mIdx;
+	public String getArticle() {
+		return article;
 	}
-	public void setmIdx(int mIdx) {
-		this.mIdx = mIdx;
+	public void setArticle(String article) {
+		this.article = article;
 	}
 	public String getwDate() {
 		return wDate;
@@ -76,9 +82,10 @@ public class BoardVO {
 	
 	@Override
 	public String toString() {
-		return "BoardVO [idx=" + idx + ", title=" + title + ", mIdx=" + mIdx + ", wDate=" + wDate + ", hostIp=" + hostIp
-				+ ", category=" + category + ", viewCnt=" + viewCnt + ", recommend=" + recommend + ", aMid=" + aMid
-				+ ", aNickName=" + aNickName + "]";
+		return "BoardVO [idx=" + idx + ", mIdx=" + mIdx + ", title=" + title + ", article=" + article + ", wDate=" + wDate
+				+ ", hostIp=" + hostIp + ", category=" + category + ", viewCnt=" + viewCnt + ", recommend=" + recommend
+				+ ", aMid=" + aMid + ", aNickName=" + aNickName + "]";
 	}
+	
 	
 }
