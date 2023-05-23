@@ -91,4 +91,53 @@ public class B_RepleDAO {
 		
 		return trc;
 	}
+
+	public void setBoardRepleDelete(int idx) {
+		try {
+			sql = "delete from b_reple where bIdx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+	}
+
+	public String setRepleUpdate(int idx, String reple) {
+		String res = "0";
+		try {
+			sql="update b_reple set reple=? where idx=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, reple);
+			pstmt.setInt(2, idx);
+			pstmt.executeUpdate();
+			res="1";
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+		return res;
+	}
+	
+	public String setRepleDelete(int idx) {
+		String res = "0";
+		try {
+			sql="delete from b_reple where idx=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+			res="1";
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+		return res;
+	}
 }

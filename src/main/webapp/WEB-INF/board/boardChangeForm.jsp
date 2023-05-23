@@ -33,20 +33,57 @@
 		
 	}
 	
-	function boardChangeCheck(){
+	function boardDeleteCheck(){
+		let idx = $("#idx").val();
 		let ans = confirm("정말로 이 게시글을 삭제하시겠습니까?");
-		
 		if(!ans)return false;
 		else{
 			let ans = confirm("삭제한 글은 복구되지 않습니다!");
 			if(!ans)return false;
 			else{
-				
+				$.ajax({
+					type:"post",
+					url:"${ctp}/boardAticleDelete.cp",
+					data:{idx:idx},
+					success:function(){
+						alert("현재 글이 삭제되었습니다.");
+						location.href="${ctp}/boardList.cp?pageSize=${pageSize}&nowPage=${nowPage}";
+					},
+					error : function(){
+						alert("전송 오류가 발생하였습니다.")
+					}
+				})
 			}
-			
 		}
 	}
+	
 	</script>
+	<style>
+	#changer:hover{
+		background-color : #ffc107;
+		color : black;
+		transition: all .3s;
+	}
+	#changer{
+		transition: all .3s;
+	}
+	#delete:hover{
+		background-color : #dc3545;
+		color : white;
+		transition: all .3s;
+	}
+	#delete{
+		transition: all .3s;
+	}
+	#goBack:hover{
+		background-color : #20c997;
+		color : white;
+		transition: all .3s;
+	}
+	#goBack{
+		transition: all .3s;
+	}
+	</style>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/header.jsp"/>
@@ -95,13 +132,13 @@
 				<div class="row text-center">
 					<div class="col-sm-4 p-0 m-0"></div>
 					<div class="col-sm-1 p-0 m-1">
-						<input type="button" value="수정" onclick="boardChangeCheck()" class="form-control" >
+						<input name="changer" id="changer" type="button" value="수정" onclick="boardChangeCheck()" class="form-control" >
 					</div>
 					<div class="col-sm-1 p-0 m-1">	
-						<input type="button" value="삭제" onclick="boardDeleteCheck()"  class="form-control" >
+						<input name="delete" id="delete" type="button" value="삭제" onclick="boardDeleteCheck()"  class="form-control" >
 					</div>
 					<div class="col-sm-1 p-0 m-1">	
-						<input type="button" value="이전" onclick="location.href='${ctp}/boardRead.cp?idx=${idx}&pageSize=${pageSize}&nowPage=${nowPage}'" class="form-control" >
+						<input name="goBack" id="goBack" type="button" value="이전" onclick="location.href='${ctp}/boardRead.cp?idx=${idx}&pageSize=${pageSize}&nowPage=${nowPage}'" class="form-control" >
 					</div>
 					<div class="col-sm-4 p-0 m-0"></div>
 				</div>

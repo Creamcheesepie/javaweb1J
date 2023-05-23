@@ -42,11 +42,63 @@
 		})	
 	}
 	
+	function repleAdjustModalOpen(idx,reple){
+		$("#repleChangeIdx").val(idx); 
+		$("#repleChange").val(reple);
+		$("#repleAdjust").modal('show');
+	}
 	
+	function repleChange(){
+		let idx = $("#repleChangeIdx").val();
+		let reple = $("#repleChange").val();
+		
+		$.ajax({
+			type:"post",
+			url:"${ctp}/repleChangeOk.cp",
+			data:{idx:idx,reple:reple},
+			success:function(res){
+				if(res=="1"){
+					alert("댓글 수정에 성공했습니다.");
+					location.reload();
+				}
+				else{
+					alert("댓글 수정에 실패하였습니다.")
+				}
+			},
+			error : function(){
+				alert("전송오류가 발생하였습니다.")
+			}
+		})
+		
+		
+	}
+	
+	function repleDelete(){
+		let idx = $("#repleChangeIdx").val();
+		
+		let ans = confirm("댓글을 지우시겠습니까?");
+		if(!ans) return false;
+		
+		$.ajax({
+			type:"post",
+			url:"${ctp}/repleDeleteOk.cp",
+			data:{idx:idx},
+			success:function(res){
+				if(res=="1"){
+					alert("댓글 삭제에 성공했습니다.");
+					location.reload();
+				}
+				else{
+					alert("댓글 삭제에 실패하였습니다.")
+				}
+			},
+			error : function(){
+				alert("전송오류가 발생하였습니다.")
+			}
+		})
+	}
 	</script>
-	<style>
-	
-	</style>
+	<jsp:include page="/include/cssMyStyle.jsp"/>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/header.jsp"/>
@@ -120,8 +172,10 @@
 							<div class="col-sm-10 text-right" style="font-size:12px;">${vo.wTime}</div>
 						</div>
 						<div class="row mb-3">
-							
-							<div class="col" style="font-size:14px;">${vo.reple}</div>
+							<div class="col-sm-11" style="font-size:14px;">${vo.reple}</div>
+							<div class="col-sm-1 M-0 pl-0 text-right">
+								<button type="button" class="form-control" onclick="repleAdjustModalOpen('${vo.idx}','${vo.reple}')" style="height:100%">수정</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -129,7 +183,7 @@
 				<div class="row"><!-- 댓글 작성부 -->
 					<div class="col-sm-10 m-0 pr-0 pl=1"><textarea rows="4.5" name="repleArticle" id="repleArticle" class="form-control" style="resize:none;"></textarea></div>
 					<input type="hidden" name="boardIdx" id="boardIdx" value="${vo.idx}"/>
-					<div class="col-sm-2 m-0 p-0"><input type="button" onclick="repleCheck()" value="댓글달기" class="form-control" style="height:100%"></div>
+					<div class="col-sm-2 m-0 p-0"><input name="repleup" id="repleup" type="button" onclick="repleCheck()" value="댓글달기" class="form-control grayHover" style="height:100%"></div>
 				</div>
 				<div>
 					<ul class="pagination text-center justify-content-center border-secondary">	
@@ -146,7 +200,33 @@
 			</div><!-- 본문부 바닥 -->
 		</div><!-- 그리드 전체부분 마지막 -->
 	</div><!-- 전체 컨테이너 마지막 -->
-<p><br/></p>
+	<!-- 댓글 수정 모달 -->
+<div class="modal fade" id="repleAdjust">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">댓글 수정</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div><!-- 모달 헤더 끝 -->
+      <!-- 모달 바디 -->
+      <div class="modal-body">
+      <h4>내용</h4>
+      	<input type="text" name="repleChange" id="repleChange" class="form-control"/>
+      	<input type="hidden" name="repleChangeIdx" id="repleChangeIdx"/>
+      </div><!-- 모달 바디 끝 -->
+      <!-- 모달 푸터  -->
+      <div class="modal-footer">
+        <button type="button" class="btn greenHover" onclick="repleChange()" data-dismiss="modal">수정</button>
+        <button type="button" class="btn redHover" onclick="repleDelete()" data-dismiss="modal">삭제</button>
+        <button type="button" class="btn yellowHover" data-dismiss="modal">닫기</button>
+      </div><!-- 모달 푸터 끝 -->
+    </div>
+  </div>
+</div>
+<!-- 댓글 수정 모달 끝 -->
+<p><br></p>
 <jsp:include page="/include/footer.jsp"/>
 </body>
 </html>

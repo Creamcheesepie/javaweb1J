@@ -171,6 +171,21 @@ public class Controller extends HttpServlet{
 			command.execute(request, response);
 			viewPage ="/include/message.jsp";
 		}
+		else if(com.equals("/boardAticleDelete")) {//게시판 글 삭제
+			command = new boardAticleDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/repleChangeOk")) {//댓글 수정
+			command = new repleChangeOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/repleDeleteOk")) {//댓글 삭제
+			command = new repleDeleteOkCommand();
+			command.execute(request, response);
+			return;
+		}
 				
 		
 		

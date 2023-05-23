@@ -191,5 +191,19 @@ public class BoardDAO {
 		}
 		return check;
 	}
+
+	public void setBoardArticle(int idx) {
+		try {
+			sql="delete from board where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql 오류2 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
 	
 }
