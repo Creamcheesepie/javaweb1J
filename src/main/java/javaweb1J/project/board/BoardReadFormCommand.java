@@ -25,12 +25,11 @@ public class BoardReadFormCommand implements ProjectInterface {
 		
 		HttpSession session = request.getSession();
 		
+		//조회수 호그인 1회당 한번
 		ArrayList<String> bIdx = (ArrayList<String>) session.getAttribute("sContentIdx");
-		
 		if(bIdx == null) {
 			bIdx = new ArrayList<>();
 		}
-		
 		String tempContentIdx = "board" + idx;
 		
 		session.setAttribute("sContentIdx", tempContentIdx);
@@ -41,6 +40,9 @@ public class BoardReadFormCommand implements ProjectInterface {
 		}
 		
 		session.setAttribute("sContentIdx", bIdx);
+		
+		
+		
 		//이 아래로는 댓글 리스트 가져오는 부분
 		int r_nowPage = request.getParameter("r_nowPage")==null?1:Integer.parseInt(request.getParameter("r_nowPage")); 
 		int r_pageSize = request.getParameter("r_pageSize")==null?10:Integer.parseInt(request.getParameter("r_pageSize"));
@@ -76,6 +78,21 @@ public class BoardReadFormCommand implements ProjectInterface {
 		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("vo", vo);
 		request.setAttribute("vos", repleVos);
+		
+		//현재 사용자가 추천했는지 여부 가져오기
+		int sMIdx = session.getAttribute("sMIdx")==null?0:(int)session.getAttribute("sMIdx");
+		BoardRecommendVO rvo = new BoardRecommendVO();
+		rvo = dao.getBoardRecommended(sMIdx, idx);
+		if(sMIdx!=0) {
+			if(rvo.getmIdx()==-1) {
+				request.setAttribute("sMR", "no");
+
+			}
+			else {
+				request.setAttribute("sMR", "ok");
+
+			}
+		}
 		
 	}
 

@@ -74,6 +74,7 @@ select * from board where midx=1 and title='안녕' order by idx desc limit 1;
 create table boardRecommend(
 	bIdx		int not null,
 	mIdx		int not null,
+	rDate		datetime not null default now(),
 	foreign key(mIdx) references member(idx)
 	on update cascade
 	on delete restrict,
@@ -99,3 +100,38 @@ create table b_reple(
 );
 desc b_reple;
 drop table b_reple;
+
+create table gethering(
+	idx								int not null auto_increment primary key,
+	title							varchar(40) not null,
+	mIdx							int not null,
+	location 					varchar(30) not null,
+	getheringType			varchar(3) not null,
+	totalGetherMember int not null default 2,
+	getherJoinMember	int not null,
+	gpxFileName				varchar(100),
+	distance					int not null,
+	getHeight					int,
+	detailCourse			text,
+	content						varchar(1000) not null,
+	getherTime				datetime not null,
+	wDate							datetime not null default now(),
+	foreign key(mIdx) references member(idx)
+	on update cascade
+	on delete restrict
+);
+desc gethering;
+
+create table getherJoinMember(
+	idx				int not null auto_increment primary key,
+	gIdx			int not null,
+	mIdx			int not null,
+	jDate			datetime not null default now(),
+	foreign key(mIdx) references member(idx)
+	on update cascade
+	on delete restrict,
+	foreign key(gIdx) references gethering(idx)
+	on update cascade
+	on delete restrict
+);
+desc getherJoinMember;

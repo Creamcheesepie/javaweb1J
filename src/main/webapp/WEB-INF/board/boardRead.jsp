@@ -97,6 +97,30 @@
 			}
 		})
 	}
+	
+	function boardRecommend(mIdx,bIdx){
+		let query ={mIdx:mIdx,bIdx:bIdx};
+		
+		$.ajax({
+			type:"post",
+			url:"${ctp}/boardRecommendUpdate.cp",
+			data:query,
+			success:function(res){
+				if(res=="1"){
+					alert("이 글을 추천하였습니다.");
+					location.reload();
+				}
+				if(res=="2"){
+					alert("추천을 취소하였습니다")
+					location.reload();
+				}
+			},
+			error : function(){
+				alert("전송오류가 발생하였습니다.")
+			}
+		})
+		
+	}
 	</script>
 	<jsp:include page="/include/cssMyStyle.jsp"/>
 </head>
@@ -143,7 +167,14 @@
 				<div class="row text-center">
 					<div class="col">
 						<c:if test="${sMIdx!=vo.mIdx}">
-							<input type="button" value="추천" onclick="boardRecommend()" class="btn">
+							<c:if test="${sMIdx!=null}">
+								<c:if test="${sMR=='no'}">
+								<input type="button" value="추천" onclick="boardRecommend('${sMIdx}','${vo.idx}')" class="btn skyblueHover">
+								</c:if>
+								<c:if test="${sMR=='ok'}">
+								<input type="button" value="추천취소" onclick="boardRecommend('${sMIdx}','${vo.idx}')" class="btn redHover">
+								</c:if>
+							</c:if>
 						<input type="button" value="돌아가기" onclick="location.href='${ctp}/boardList.cp?pageSize=${pageSize}&nowPage=${nowPage}'" class="btn btn-info">
 						</c:if>
 						<c:if test="${sMIdx==vo.mIdx}">
@@ -174,7 +205,9 @@
 						<div class="row mb-3">
 							<div class="col-sm-11" style="font-size:14px;">${vo.reple}</div>
 							<div class="col-sm-1 M-0 pl-0 text-right">
+								<c:if test="${sMIdx==vo.mIdx}">
 								<button type="button" class="form-control" onclick="repleAdjustModalOpen('${vo.idx}','${vo.reple}')" style="height:100%">수정</button>
+								</c:if>
 							</div>
 						</div>
 					</div>

@@ -15,6 +15,8 @@ import javaweb1J.project.member.MemberMyInfoUpdateFormCommand;
 import javaweb1J.project.member.MemberPwdResetCheckCommand;
 import javaweb1J.project.member.MidFinderCommand;
 import javaweb1J.project.member.SignInCheckCommand;
+import javaweb1J.project.b_Reple.repleChangeOkCommand;
+import javaweb1J.project.b_Reple.repleDeleteOkCommand;
 import javaweb1J.project.b_Reple.repleWriteOkCommand;
 import javaweb1J.project.board.BoardChagneFormCommand;
 import javaweb1J.project.board.BoardChangeOkCommand;
@@ -22,6 +24,9 @@ import javaweb1J.project.board.BoardListCommand;
 import javaweb1J.project.board.BoardReadFormCommand;
 import javaweb1J.project.board.BoardWriteFormCommand;
 import javaweb1J.project.board.BoardWriteOkCommand;
+import javaweb1J.project.board.boardAticleDeleteCommand;
+import javaweb1J.project.board.boardRecommendUpdateCommand;
+import javaweb1J.project.gethering.getheringListCommand;
 import javaweb1J.project.member.LoginCheckCommand;
 import javaweb1J.project.member.memberIdCheckCommand;
 import javaweb1J.project.member.memberLogoutCommand;
@@ -185,6 +190,16 @@ public class Controller extends HttpServlet{
 			command = new repleDeleteOkCommand();
 			command.execute(request, response);
 			return;
+		}
+		else if(com.equals("/boardRecommendUpdate")) {//게시글 추천/취소
+			command = new boardRecommendUpdateCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/getheringList")) { //모임 리스트 페이지
+			command = new getheringListCommand();
+			command.execute(request, response);
+			viewPage +="/gethering/getheringList.jsp";
 		}
 				
 		

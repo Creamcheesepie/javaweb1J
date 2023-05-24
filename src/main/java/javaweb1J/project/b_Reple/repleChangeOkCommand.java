@@ -1,4 +1,4 @@
-package javaweb1J.project;
+package javaweb1J.project.b_Reple;
 
 import java.io.IOException;
 
@@ -6,23 +6,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javaweb1J.project.b_Reple.B_RepleDAO;
-import javaweb1J.project.board.BoardDAO;
-import javaweb1J.project.board.BoardVO;
+import javaweb1J.project.ProjectInterface;
 
-public class boardAticleDeleteCommand implements ProjectInterface {
+public class repleChangeOkCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idx = request.getParameter("idx")==null?0:Integer.parseInt(request.getParameter("idx"));
+		String reple = request.getParameter("reple")==null?"":request.getParameter("reple");
 		
-		BoardDAO dao = new BoardDAO();
-		B_RepleDAO repleDao = new B_RepleDAO();
+		B_RepleDAO dao = new B_RepleDAO();
 		
-		repleDao.setBoardRepleDelete(idx);//글에 달린 댓글 먼저 삭제
-
-		dao.setBoardArticle(idx);
-
+		String res= dao.setRepleUpdate(idx,reple);
+		
+		response.getWriter().write(res);
 	}
 
 }

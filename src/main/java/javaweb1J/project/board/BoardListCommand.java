@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import javaweb1J.project.ProjectInterface;
 
@@ -30,6 +31,7 @@ public class BoardListCommand implements ProjectInterface {
 		
 		ArrayList<BoardVO> vos = dao.getBoardList(stIndexNo, pageSize);
 		
+		
 		request.setAttribute("vos", vos);
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("pageSize", pageSize);
@@ -38,6 +40,10 @@ public class BoardListCommand implements ProjectInterface {
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);
+		
+	
+		
+		
 		
 	}
 

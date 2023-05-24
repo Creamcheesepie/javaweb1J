@@ -205,5 +205,83 @@ public class BoardDAO {
 		}
 		
 	}
+
+	public BoardRecommendVO getBoardRecommended(int mIdx, int bIdx) {
+		BoardRecommendVO rvo = new BoardRecommendVO();
+		try {
+			sql="select * from boardrecommend where mIdx=? and bIdx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mIdx);
+			pstmt.setInt(2, bIdx);
+			rs= pstmt.executeQuery();
+			
+			if(rs.next()) {
+				rvo.setbIdx(rs.getInt("bIdx"));
+				rvo.setmIdx(rs.getInt("mIdx"));
+			}
+			else {
+				System.out.println("2:" + rvo.getbIdx());
+				rvo.setbIdx(-1);
+				rvo.setmIdx(-1);
+			}
+
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류1 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+
+		return rvo;
+	}
+
+	public void setRecommendUserUpdate(int mIdx, int bIdx) {
+		try {
+			sql="insert into boardrecommend values(?,?,default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bIdx);
+			pstmt.setInt(2, mIdx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql 오류2 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
+
+	public void setBoardRecommendUpdate(int bIdx, int i) {
+		try {
+			sql = "update board set recommend=recommend+? where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, i);
+			pstmt.setInt(2, bIdx);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류3 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
+
+	public void setRecommendUserDelete(int mIdx, int bIdx) {
+		try {
+			sql="delete from boardrecommend where bidx = ? and mIdx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bIdx);
+			pstmt.setInt(2, mIdx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql 오류4 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
+
+	
+
 	
 }

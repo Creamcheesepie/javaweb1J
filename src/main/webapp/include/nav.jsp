@@ -56,7 +56,7 @@
 	        <a class="nav-link" href="${ctp}/boardList.cp">게시판</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="${ctp}/BoardList.bo">모임일정</a>
+	        <a class="nav-link" href="${ctp}/getheringList.cp">모임일정</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="${ctp}/BoardList.bo">갤러리</a>
