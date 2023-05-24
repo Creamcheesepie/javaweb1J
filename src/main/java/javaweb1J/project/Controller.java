@@ -201,6 +201,16 @@ public class Controller extends HttpServlet{
 			command.execute(request, response);
 			viewPage +="/gethering/getheringList.jsp";
 		}
+		else if(com.equals("/setGetheringPlan")) { //모임 등록페이지
+			command = new SetGetheringPlanCommand();
+			command.execute(request, response);
+			viewPage +="/gethering/setGetheringPlanForm.jsp";
+		}
+		else if(com.equals("/getheringInputOk")) { //모임 등록페이지
+			command = new getheringInputOkCommand();
+			command.execute(request, response);
+			viewPage +="/gethering/setGetheringPlanForm.jsp";
+		}
 				
 		
 		

@@ -138,7 +138,7 @@
 		
 		let photoNameExe = photoName.substring(photoName.lastIndexOf(".")+1).toLowerCase();
 		
-		let maxSize = 1024*1024*10;
+		let maxSize = 1024*1024*15;
 		
 		
 		if(photoName.trim()==""){

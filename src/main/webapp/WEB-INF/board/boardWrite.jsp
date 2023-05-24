@@ -79,9 +79,9 @@
 				<hr/>
 				<div class="row text-center">
 					<div class="col">
-						<input type="button" value="작성" onclick="boardWriteCheck()" class="btn btn-primary">
-						<input type="reset" value="비우기"  class="btn btn-warning">
-						<input type="button" value="돌아가기" onclick="location.href='${ctp}/boardList.cp?pageSize=${pageSize}&nowPage=${nowPage}'" class="btn btn-success">
+						<input type="button" value="작성" onclick="boardWriteCheck()" class="btn skyblueHover">
+						<input type="reset" value="비우기"  class="btn yellowHover">
+						<input type="button" value="돌아가기" onclick="location.href='${ctp}/boardList.cp?pageSize=${pageSize}&nowPage=${nowPage}'" class="btn greenHover">
 					</div>
 				</div>
 				

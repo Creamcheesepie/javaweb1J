@@ -34,6 +34,14 @@
 .grayHover{
 	transition: all .3s;
 }
+.grHover:hover{
+	background-color : #efefef;
+	
+	transition: all .3s;
+}
+.grHover{
+	transition: all .3s;
+}
 .skyblueHover:hover{
 	background-color : #00BFFF;
 	color : black;

@@ -103,24 +103,32 @@ drop table b_reple;
 
 create table gethering(
 	idx								int not null auto_increment primary key,
-	title							varchar(40) not null,
+	
 	mIdx							int not null,
-	location 					varchar(30) not null,
+	title							varchar(40) not null,
+	content						varchar(1000) not null,
 	getheringType			varchar(3) not null,
+	location 					varchar(30) not null,
+	
 	totalGetherMember int not null default 2,
 	getherJoinMember	int not null,
 	gpxFileName				varchar(100),
 	distance					int not null,
 	getHeight					int,
+	
 	detailCourse			text,
-	content						varchar(1000) not null,
 	getherTime				datetime not null,
 	wDate							datetime not null default now(),
+	hostIp						varchar(30),
+	
 	foreign key(mIdx) references member(idx)
 	on update cascade
 	on delete restrict
 );
+
+insert into gethering values(default,1,'모임기능 테스트','네, 테스트 중입니다.','관리','충청북도 청주시 흥덕구 복대동',100,34,'test.gpx',75,350,'흥덕구-옥산면-봉명동','2023-05-04',default,'192.168.50.88');
 desc gethering;
+drop table gethering;
 
 create table getherJoinMember(
 	idx				int not null auto_increment primary key,
@@ -135,3 +143,4 @@ create table getherJoinMember(
 	on delete restrict
 );
 desc getherJoinMember;
+drop table getherJoinMember;
