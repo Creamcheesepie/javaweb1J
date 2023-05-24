@@ -77,6 +77,40 @@ public class GetheringDAO {
 
 		return vos;
 	}
+
+	public boolean setGetheringInsert(GetheringVO vo) {
+		boolean check = false;
+		
+		try {
+			sql="insert into gethering values(default,"
+					+ " ?,?,?,?,?,"
+					+ " ?,?,?,?,?,"
+					+ " ?,?,default,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getmIdx());
+			pstmt.setString(2, vo.getTitle());
+			pstmt.setString(3, vo.getContent());
+			pstmt.setString(4, vo.getGetheringType());
+			pstmt.setString(5, vo.getLocation());
+			pstmt.setInt(6, vo.getTotalGetherMember());
+			pstmt.setInt(7, vo.getGetherJoinMember());
+			pstmt.setString(8, vo.getGpxFileName());
+			pstmt.setInt(9, vo.getDistance());
+			pstmt.setInt(10, vo.getGetHeight());
+			pstmt.setString(11, vo.getDetailCourse());
+			pstmt.setString(12, vo.getGetherTime());
+			pstmt.setString(13, vo.getHostIp());
+			pstmt.executeUpdate();
+			check = true;
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류19 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+		return check;
+	}
 	
 	
 }

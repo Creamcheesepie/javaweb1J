@@ -209,7 +209,7 @@ public class Controller extends HttpServlet{
 		else if(com.equals("/getheringInputOk")) { //모임 등록페이지
 			command = new getheringInputOkCommand();
 			command.execute(request, response);
-			viewPage +="/gethering/setGetheringPlanForm.jsp";
+			viewPage ="/include/message.jsp";
 		}
 				
 		

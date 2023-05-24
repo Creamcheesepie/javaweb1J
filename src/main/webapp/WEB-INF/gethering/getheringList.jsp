@@ -18,7 +18,34 @@
 			color:white;
 			font-weight:bolder;
 		}
+		.calDefault{
+			background-color:#efefef;
+		}
+		.temp{
+		 background-color:#0dcaf0; 
+		 color:white;
+		}
 	</style>
+	<script>
+	'use strict';
+	                      //title,content,getheringType,location,vo.totalGetherMember}','${vo.getherJoinMember}','${vo.gpxFileName}','${vo.distance}','${vo.getHeight}','${vo.detailCourse}','${vo.getherTime}','${vo.aName}','${vo.aNickName}')
+	function getherJoinOpen(title,content,getheringType,location,totalGetherMember,getherJoinMember,gpxFileName,distance,getHeight,detailCourse,getherTime,aName,aNickName){
+		$("#joinTitle").text(title);
+		$("#GRName").text(aName);
+		$("#GRNickName").text(aNickName);
+		$("#gLocation").text(location);
+		$("#getType").text(getheringType);
+		$("#gjm").text(getherJoinMember);
+		$("#gtm").text(totalGetherMember);
+		$("#gDistance").text(distance);
+		$("#gHeight").text(getHeight);
+		$("#gDetail").text(detailCourse);
+		$("#gTime").text(getherTime);
+		
+		
+		$("#getherJoin").modal(open);
+	}
+	</script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/header.jsp"/>
@@ -50,6 +77,7 @@
 				<hr style="margin: 3px 0px 3px 0px; padding : 0px;">
 				<div class="row">
 					<div class="col ml-0 pl-0">
+					
 						<div class="row text-center">
 							<div class="col p-0 m-0" style="font-size:12px;color:red;background-color:#e2e2e2;">일</div>
 							<div class="col p-0 m-0" style="font-size:12px;background-color:#e2e2e2;">월</div>
@@ -59,39 +87,49 @@
 							<div class="col p-0 m-0" style="font-size:12px;background-color:#e2e2e2;">금</div>
 							<div class="col p-0 m-0" style="font-size:12px;color:blue;background-color:#e2e2e2;">토</div>
 						</div>
+						
 						<div class="row"> <!-- 7주일 가로 줄맞춤 시작 -->
+						
 						<!-- 1주일 칸 중 표시되는 달의 처음 날짜 이전의 요일은 공백으로 처리한다. -->
 						<c:set var="gap" value="1"/>
+						
 							<c:forEach begin="1" end="${startWeek-1}" >
 								<div class="col p-0 m-0"  style="font-size:12px;background-color:#efefef">&nbsp;</div>
 								<c:set var="gap" value="${gap+1}"/>
 							</c:forEach>
+							
 							 <!-- 해당 월의ㅡ 첫째 주 날짜부터 출력하되 gap가 7이되면 줄바꿈하기 -->
 							<c:forEach begin="1" end="${lastDay}" varStatus="st">
-								<c:forEach var="vo" items="${vos}">
-									<c:if test="${fn:substring(vo.getherTime,8,10)==st.count}">
-										<div class="col p-0 m-0"  style="font-size:12px; background-color:#0dcaf0; color:white;" id="td${gap}" >	
-									</c:if>
-									<c:if test="${fn:substring(vo.getherTime,8,10)!=st.count}">
-										<div class="col p-0 m-0"  style="font-size:12px;background-color:#efefef" id="td${gap}" >	
-									</c:if>
-								</c:forEach>
+									
+										<div class="col p-0 m-0 calDefault"  style="font-size:12px;" id="td${gap}" >
+								
 								${st.count}
+								<c:forEach var="vo" items="${vos}" >
+								<c:if test="${fn:substring(vo.getherTime,8,10)==st.count}"> 🚲 </c:if>
+								</c:forEach>
 								</div>
+								
+								
 								<c:if test="${gap%7==0}">
 								</div><div class="row"> <!-- 7주일 가로 줄맞춤 끝 -->
 								</c:if>
+								
+								
 								<c:set var="lastgapEnd" value="${gap%7}"/>
 								<c:set var="gap" value="${gap+1}"/>
 								
 							</c:forEach>
-							<c:forEach begin="2" end="${lastgapEnd}">
+							 <c:forEach begin="2" end="${lastgapEnd}">
 							<div class="col p-0 m-0" style="font-size:12px;background-color:#efefef">&nbsp;</div>
-							</c:forEach>
+							</c:forEach> 
+						
 						</div>
-	
+						
+						</div>
+						
 					</div>
-				</div>
+
+				
 			</div><!-- 사이드바 영역끝 -->
 			<div class="col-sm-10"><!-- 오른쪽 모임정보 영역 -->
 				<div class="row">
@@ -117,15 +155,22 @@
 				</div>
 				<div class="row text-right mt-2">
 					<div class="col align-self-center">
-					거리:${vo.distance}km 인원수 :${vo.getherJoinMember}/${vo.totalGetherMember} </div>
+					획득고도:${vo.getHeight}m 거리:${vo.distance}km 인원수 :${vo.getherJoinMember}/${vo.totalGetherMember} </div>
 				</div>
 				<div class="row text-left" style="font-size:12px;">
 					<div class="col-sm-4 align-self-end">
 					작성시간 : ${fn:substring(vo.wDate,0,10)} 작성자IP:${vo.hostIp}
 					</div>
 					<div class="col-sm-8 text-right">
+					<c:if test="${sMIdx!=null}">
 					<input type="button" value="gpx파일 다운로드" class="btn btn-primary">
-					<input type="button" value="참여" class="btn btn-success">
+					</c:if>
+					<c:if test="${sMIdx!=vo.mIdx && sMIdx!=null}">
+						<input type="button" value="참여" onclick="getherJoinOpen('${vo.title}','${vo.content}','${vo.getheringType}','${vo.location}','${vo.totalGetherMember}','${vo.getherJoinMember}','${vo.gpxFileName}','${vo.distance}','${vo.getHeight}','${vo.detailCourse}','${vo.getherTime}','${vo.aName}','${vo.aNickName}')" class="btn btn-success">
+					</c:if>
+					<c:if test="${sMIdx==vo.mIdx}">
+						<input type="button" value="인원확인" class="btn btn-info">
+					</c:if>
 					</div>
 				</div>
 				<hr/>
@@ -147,7 +192,42 @@
 				</div>
 			</div><!--오른쪽 모임정보 영역 끝 -->
 		</div><!-- 가로로 크게 두 공간을 나누기위한 영역 -->
-	</div>
+	</div><!-- 전체 컨테이너 끝 -->
+	
+	 <!-- The Modal -->
+  <div class="modal fade" id="getherJoin">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">모임참여</h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div>모임장 : <span name="GRName" id="GRName"></span>(<span name="GRNickName" id="GRNickName"></span>)</div>
+          <div>모임명 : <span name="joinTitle" id="joinTitle"></span></div>
+          <div>모임형태 : <span name="getType" id="getType"></span></div>
+          <div>지역 : <span name="gLocation" id="gLocation"></span></div>
+          <div>인원수 : <span name="gjm" id="gjm"></span>/<span name="gtm" id="gtm"></span></div>
+          <div>거리 : <span name="gDistance" id="gDistance"></span>Km</div>
+          <div>획득고도 : <span name="gHeight" id="gHeight"></span>m</div>
+          <div>모임시간 : <span name="gTime" id="gTime"></span></div>
+          <div>구간상세 : <span name="gDetail" id="gDetail"></span></div>
+          
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" >참여</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+	
 <p><br/></p>
 <jsp:include page="/include/footer.jsp"/>
 </body>

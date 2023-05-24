@@ -10,6 +10,7 @@ public class SetGetheringPlanCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//레벨만 검사할까나?
 		
 
 	}

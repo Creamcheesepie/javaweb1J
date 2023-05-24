@@ -14,14 +14,15 @@
 	
 	function getheringInputSubmit(){
 		let title = $("#title").val();
+		let content = $("#content").val();
 		let getheringType = $("#getheringType").val();
-		let location = $("#loaction").val();
+		let location = $("#location").val();
+		let totalGetherMember =$("#totalGetherMember").val();
+		let distance = $("#distance").val();
+		let getHeight = $("#getHeight").val();
 		let getheringDate1 = $("#getheringDate1").val();
 		let getheringTime1 = $("#getheringTime1").val();
-		let totalGetheringMember =$("#totalGetheringMember").val();
-		let getHeight = $("#getHeight").val();
 		let detailCourse = $("#detailCourse").val();
-
 		let gpxFileName = document.getElementById("gpxFile").value;
 		
 		let gpxFileNameExe = gpxFileName.substring(gpxFileName.lastIndexOf(".")+1).toLowerCase();
@@ -49,11 +50,11 @@
 			return false;
 		}
 		
-		let getheringDate =  getheringDate1+getheringTime1;
+		let getheringDate =  getheringDate1+" "+getheringTime1;
 		
-		$("#getheringDate").val(getheringDate);
+		$("#getherTime").val(getheringDate);
 		
-		if(totalGetheringMember.trim()==""){
+		if(totalGetherMember.trim()==""){
 			alert("모임 인원수를 설정해주세요.");
 			return false;
 		}
@@ -82,9 +83,9 @@
 			alert("gpx파일을 저장해주세요.")
 		}
 		else if(gpxFileName.trim()!=""){
-			let fileSize = document.getElementById("gpxFileName").files[0].size;
+			let fileSize = document.getElementById("gpxFile").files[0].size;
 			
-			if(gpxFileNameEXE!="gpx" ){
+			if(gpxFileNameExe!="gpx" ){
 				alert(".gpx 확장자의 gpx파일만 업로드 가능합니다.");
 				return false;
 			}
@@ -139,7 +140,7 @@
 					<div class="col-sm-1 align-self-center p-0">분류</div>
 					<div class="col-sm-1  p-0 m-0">
 						<select name="getheringType" id="getheringType" class="custom-select">
-							<option value="연습" <c:if test="${getheringType=='연습' || category==null}">selected</c:if>>연습</option>
+							<option value="연습" <c:if test="${getheringType=='연습' ||getheringType==null}">selected</c:if>>연습</option>
 							<option value="대회" <c:if test="${getheringType=='대회'}">selected</c:if>>대회</option>
 							<option value="훈련" <c:if test="${getheringType=='훈련'}">selected</c:if>>훈련</option>
 							<option value="친목" <c:if test="${getheringType=='친목'}">selected</c:if>>친목</option>
@@ -151,12 +152,12 @@
 					<div class="col-sm-1 align-self-center p-0">지역</div>
 					<div class="col-sm-5 align-self-center p-0"><input type="text" name="location" id="location" class="form-control" placeholder="시작할 장소를 면,리,동 단위까지 적어주세요."/></div>
 					<div class="col-sm-1 align-self-center p-0">모임시간</div>
-					<div class="col-sm-2 align-self-center p-0 mr-1"><input type="date" name="gethringDate1" class="form-control" value="<%=java.time.LocalDate.now()%>"/></div>
-					<div class="col-sm-2 align-self-center p-0"><input type="time" name="gethringTime1" class="form-control" value="<%=java.time.LocalDate.now()%>"/></div>
+					<div class="col-sm-2 align-self-center p-0 mr-1"><input type="date" name="getheringDate1" id="getheringDate1" class="form-control" value="<%=java.time.LocalDate.now()%>"/></div>
+					<div class="col-sm-2 align-self-center p-0"><input type="time" name="getheringTime1" id="getheringTime1" class="form-control" value="<%=java.time.LocalDate.now()%>"/></div>
 				</div>
 				<div class="row text-center mt-2">
 					<div class="col-sm-1 align-self-center p-0">총원</div>
-					<div class="col-sm-1 align-self-center p-0"><input type="number" name="totalGetheringMember" id="totalGetheringMember" class="form-control" min="2" max="300"/></div>
+					<div class="col-sm-1 align-self-center p-0"><input type="number" name="totalGetherMember" id="totalGetherMember" class="form-control" min="2" max="300"/></div>
 					<div class="col-sm-1 align-self-center p-0 text-left">&nbsp;명</div>
 					<div class="col-sm-1 align-self-center p-0">코스길이</div>
 					<div class="col-sm-1 align-self-center p-0"><input type="text" name="distance" id="distance" class="form-control"/></div>
@@ -167,9 +168,9 @@
 				</div>
 					<div class="row text-center mt-2">
 						<div class="col-sm-1 align-self-center p-0">세부코스</div>
-						<div class="col-sm-5 align-self-center p-0"><input type="text" name="detailcourse" id="detailcourse" class="form-control" placeholder="갈림길이나 특정 기점을 기준으로 작성해주세요."/></div>
+						<div class="col-sm-5 align-self-center p-0"><input type="text" name="detailCourse" id="detailCourse" class="form-control" placeholder="갈림길이나 특정 기점을 기준으로 작성해주세요."/></div>
 						<div class="col-sm-1 align-self-center p-0">gpx파일</div>
-						<div class="col-sm-4 align-self-center p-0"><input type="file" id="gpxFile" name="gpxFile" onchange="imageCheck(this)" class="form-control-file"></div>
+						<div class="col-sm-4 align-self-center p-0"><input type="file" id="gpxFile" name="gpxFile" class="form-control-file"></div>
 					</div>
 				<hr/>
 					<div class="row text-center mt-2">
@@ -179,7 +180,7 @@
 					<hr/>
 						<input type="hidden" name="hostIp" id="hostIp" value="${pageContext.request.remoteAddr}"/>
 						<input type="hidden" name="mIdx" id="mIdx" value="${sMIdx}"/>
-						<input type="hidden" name="getheringDate" id="getheringDate" />
+						<input type="hidden" name="getherTime" id="getherTime" />
 					</form>
 					<div class="row text-center mt-2" style="height:100px">
 						<div class="col align-self-start">
