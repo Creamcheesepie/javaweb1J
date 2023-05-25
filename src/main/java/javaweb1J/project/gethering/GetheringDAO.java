@@ -238,6 +238,74 @@ public class GetheringDAO {
 
 		return vos;
 	}
-	
-	
+
+	public ArrayList<GetheringVO> getMyGetheringList(int stIndexNo, int pageSize, int sMIdx) {
+		ArrayList<GetheringVO> vos = new ArrayList<>();
+		try {
+			sql = "select * ,"
+					+ " (select nickName from member where idx=g.midx) as aNickName,"
+					+ " (select mid from member where idx=g.midx)as aMid,"
+					+ " (select name from member where idx=g.midx)as aName,"
+					+ " (select mIdx from getherJoinMember where gIdx=g.idx and mIdx=? ) as joined "
+					+ " from gethering g"
+					+ " where midx=? "
+					+ "	order by idx desc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, sMIdx);
+			pstmt.setInt(2, sMIdx);
+			pstmt.setInt(3, stIndexNo);
+			pstmt.setInt(4, pageSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				GetheringVO vo = new GetheringVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setmIdx(rs.getInt("mIdx"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString("content"));
+				vo.setGetheringType(rs.getString("getheringType"));
+				vo.setLocation(rs.getString("location"));
+				vo.setTotalGetherMember(rs.getInt("totalGetherMember"));
+				vo.setGetherJoinMember(rs.getInt("getherJoinMember"));
+				vo.setGpxFileName(rs.getString("gpxFileName"));
+				vo.setDistance(rs.getInt("distance"));
+				vo.setGetHeight(rs.getInt("getHeight"));
+				vo.setDetailCourse(rs.getString("detailCourse"));
+				vo.setGetherTime(rs.getString("getherTime"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setaNickName(rs.getString("aNickName"));
+				vo.setaMid(rs.getString("aMid"));
+				vo.setaName(rs.getString("aName"));
+				vo.setJoined(rs.getInt("joined"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("sql 오류19 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+
+		return vos;
+	}
+
+	public void setGetheringUpdate(GetheringVO vo) {
+		try {
+			sql = "update gethering set location=?, distance=?,getHeight=?,detailCourse=?  where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getLocation());
+			pstmt.setInt(2, vo.getDistance());
+			pstmt.setInt(3, vo.getGetHeight());
+			pstmt.setString(4, vo.getDetailCourse());
+			pstmt.setInt(5, vo.getIdx());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류3 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
+
 }

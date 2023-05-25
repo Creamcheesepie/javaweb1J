@@ -45,6 +45,16 @@ public class AdminController extends HttpServlet {
 				command.execute(request, response);
 				viewPage +="/admin/boardMangement.jsp";
 			}
+			else if(com.equals("/setUserlevelCahnge")) { //
+				command = new SetUserlevelCahngeCommand();
+				command.execute(request, response);
+				return;
+			}
+			else if(com.equals("/setDeleteTAM")) { //
+				command = new SetDeleteTAMCommand();
+				command.execute(request, response);
+				return;
+			}
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);

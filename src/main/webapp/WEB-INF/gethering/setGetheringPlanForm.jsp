@@ -187,7 +187,7 @@
 						
 							<input type="button" value="등록" onclick="getheringInputSubmit()" class="btn skyblueHover">
 							<input type="reset" value="재작성" class="btn yellowHover">
-							<input type="button" value="돌아가기" class="btn greenHover">
+							<input type="button" value="돌아가기" onclick="location.href='${ctp}/getheringList.cp'" class="btn greenHover">
 						</div>
 					</div>
 			</div>

@@ -1,4 +1,4 @@
-package javaweb1J.project;
+package javaweb1J.project.gethering;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javaweb1J.project.gethering.GetheringDAO;
-import javaweb1J.project.gethering.GetheringJoinMemberVO;
+import javaweb1J.project.ProjectInterface;
 
 public class getherMemberCheckListCommand implements ProjectInterface {
 

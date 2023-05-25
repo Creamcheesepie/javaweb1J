@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>모임일정</title>
+	<title>내 모임</title>
 	<jsp:include page="/include/bs4.jsp"/>
 	<jsp:include page="/include/cssMyStyle.jsp"/>
 	<style>
@@ -28,62 +28,41 @@
 	</style>
 	<script>
 	'use strict';
-	                      //title,content,getheringType,location,vo.totalGetherMember}','${vo.getherJoinMember}','${vo.gpxFileName}','${vo.distance}','${vo.getHeight}','${vo.detailCourse}','${vo.getherTime}','${vo.aName}','${vo.aNickName}')
-	function getherJoinOpen(title,content,getheringType,location,totalGetherMember,getherJoinMember,gpxFileName,distance,getHeight,detailCourse,getherTime,aName,aNickName,idx){
+	                      //title,content,getheringType,location,totalGetherMember,getherJoinMember,gpxFileName,distance,getHeight,detailCourse,getherTime,aName}','${vo.aNickName}')
+	function getherChange(title,content,getheringType,location,totalGetherMember,getherJoinMember,gpxFileName,distance,getHeight,detailCourse,getherTime,aName,aNickName,idx){
+		alert("원활한 모임 운영을 위해 모임 내용중 변경 가능한 내용이 많지 않습니다. 이 점 유의해 주세요.")
+		
 		$("#joinTitle").text(title);
 		$("#GRName").text(aName);
 		$("#GRNickName").text(aNickName);
-		$("#gLocation").text(location);
 		$("#getType").text(getheringType);
 		$("#gjm").text(getherJoinMember);
 		$("#gtm").text(totalGetherMember);
-		$("#gDistance").text(distance);
-		$("#gHeight").text(getHeight);
-		$("#gDetail").text(detailCourse);
 		$("#gTime").text(getherTime);
+		$("#gLocation").val(location);
+		$("#gDistance").val(distance);
+		$("#gHeight").val(getHeight);
+		$("#gDetail").val(detailCourse);
 		$("#gjIdx").val(idx);
 		
 		$("#getherJoin").modal(open);
 	}
 	
-	function getherJoinCancleOpen(title,content,getheringType,location,totalGetherMember,getherJoinMember,gpxFileName,distance,getHeight,detailCourse,getherTime,aName,aNickName,idx){
-		$("#cjoinTitle").text(title);
-		$("#cGRName").text(aName);
-		$("#cGRNickName").text(aNickName);
-		$("#cgLocation").text(location);
-		$("#cgetType").text(getheringType);
-		$("#cgjm").text(getherJoinMember);
-		$("#cgtm").text(totalGetherMember);
-		$("#cgDistance").text(distance);
-		$("#cgHeight").text(getHeight);
-		$("#cgDetail").text(detailCourse);
-		$("#cgTime").text(getherTime);
-		$("#gjIdx").val(idx);
-		
-		$("#getherJoinCancle").modal(open);
-	}
-	
-	function setJoinGether(){
+	function setChangeGether(){
 		let gjMIdx = $("#gjMIdx").val();
 		let gjIdx = $("#gjIdx").val();
-		
+		let gLocation = $("#gLocation").val();
+		let gDistance = $("#gDistance").val();
+		let gHeight = $("#gHeight").val();
+		let gDetail = $("#gDetail").val();
 		
 		$.ajax({
 			type:"post",
-			url:"${ctp}/getheringmemberJoinOk.cp",
-			data:{gIdx:gjIdx,mIdx:gjMIdx},
+			url:"${ctp}/getherChangeOk.cp",
+			data:{gIdx:gjIdx,mIdx:gjMIdx,location:gLocation,distance:gDistance,getHeight:gHeight,detailCourse:gDetail},
 			success : function(res){
-				if(res=='1'){
-					alert("예약되었습니다.")
+					alert("수정되었습니다.")
 					location.reload();
-				}
-				else if(res=='2'){
-					alert("예약취소되었습니다.")
-					location.reload();
-				}
-				else if(res=='3'){
-					alert("인원이 가득 차 예약할 수 없었습니다.")
-				}
 			},
 			error : function(){
 				alert("전송오류가 발생하였습니다.")
@@ -113,6 +92,8 @@
 			}
 		})
 	}
+	
+
 	</script>
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -211,7 +192,7 @@
 					<div class="col-sm-4 text-right align-self-center">
 						<c:if test="${sLevel>3}">
 							<input type="button" onclick="location.href='${ctp}/setGetheringPlan.cp'" class="btn grHover" value="모임등록">
-							<input type="button" onclick="location.href='${ctp}/myGetheringList.cp'" class="btn grHover" value="내 모임">
+							<input type="button" onclick="location.href='${ctp}/getheringList.cp'" class="btn grHover" value="전체모임">
 						</c:if>
 					</div>
 				</div>
@@ -240,16 +221,8 @@
 					<c:if test="${sMIdx!=null}">
 					<input type="button" value="gpx파일 다운로드" class="btn btn-primary">
 					</c:if>
-					<c:if test="${sMIdx!=vo.mIdx && sMIdx!=null && vo.joined!=sMIdx && vo.getherJoinMember < vo.totalGetherMember}">
-						<input type="button" value="참가" onclick="getherJoinOpen('${vo.title}','${vo.content}','${vo.getheringType}','${vo.location}','${vo.totalGetherMember}','${vo.getherJoinMember}','${vo.gpxFileName}','${vo.distance}','${vo.getHeight}','${vo.detailCourse}','${vo.getherTime}','${vo.aName}','${vo.aNickName}','${vo.idx}')" class="btn btn-success">
-					</c:if>
-					<c:if test="${sMIdx!=vo.mIdx && sMIdx!=null && vo.joined==sMIdx && vo.getherJoinMember le vo.totalGetherMember}">
-						<input type="button" value="참가취소" onclick="getherJoinCancleOpen('${vo.title}','${vo.content}','${vo.getheringType}','${vo.location}','${vo.totalGetherMember}','${vo.getherJoinMember}','${vo.gpxFileName}','${vo.distance}','${vo.getHeight}','${vo.detailCourse}','${vo.getherTime}','${vo.aName}','${vo.aNickName}','${vo.idx}')" class="btn btn-success">
-					</c:if>
-					<c:if test="${sMIdx!=vo.mIdx && sMIdx!=null && vo.getherJoinMember eq vo.totalGetherMember && vo.joined!=sMIdx}">
-						<input type="button" value="만원" class="btn btn-danger">
-					</c:if>
 					<c:if test="${sMIdx==vo.mIdx}">
+         		 <input type="button" value="수정" onclick="getherChange('${vo.title}','${vo.content}','${vo.getheringType}','${vo.location}','${vo.totalGetherMember}','${vo.getherJoinMember}','${vo.gpxFileName}','${vo.distance}','${vo.getHeight}','${vo.detailCourse}','${vo.getherTime}','${vo.aName}','${vo.aNickName}','${vo.idx}')" class="btn btn-success">
 						<input type="button" value="인원확인" onclick="getherMemberCheck('${vo.idx}')" class="btn btn-info"/>
 					</c:if>
 					</div>
@@ -282,7 +255,7 @@
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">모임상세정보</h4>
+          <h4 class="modal-title">모임정보수정</h4>
           <button type="button" class="close" data-dismiss="modal">×</button>
         </div>
         <!-- Modal body -->
@@ -290,56 +263,32 @@
           <div>모임장 : <span name="GRName" id="GRName"></span>(<span name="GRNickName" id="GRNickName"></span>)</div>
           <div>모임명 : <span name="joinTitle" id="joinTitle"></span></div>
           <div>모임형태 : <span name="getType" id="getType"></span></div>
-          <div>지역 : <span name="gLocation" id="gLocation"></span></div>
           <div>인원수 : <span name="gjm" id="gjm"></span>/<span name="gtm" id="gtm"></span></div>
-          <div>거리 : <span name="gDistance" id="gDistance"></span>Km</div>
-          <div>획득고도 : <span name="gHeight" id="gHeight"></span>m</div>
           <div>모임시간 : <span name="gTime" id="gTime"></span></div>
-          <div>구간상세 : <span name="gDetail" id="gDetail"></span></div>
-          
+           수정사항
+          <hr style="margin: 4px 0px 4px 0px">
+          <div>지역 : 
+          <input type="text" name="gLocation" id="gLocation" class="form-control"/>
+          </div>
+          <div>
+          거리 : 
+          <input type="text" name="gDistance" id="gDistance" class="form-control"/>
+          </div>
+          <div>
+          획득고도 :
+          <input type="text" name="gHeight" id="gHeight" class="form-control"/>
+          </div>
+          <div>
+          구간상세 : 
+          <input type="text" name="gDetail" id="gDetail" class="form-control"/>
+          </div>
         </div>
         
         <!-- Modal footer -->
         <div class="modal-footer">
           <input type="hidden" name="gjMIdx" id="gjMIdx" value="${sMIdx}">
           <input type="hidden" name="gjIdx" id="gjIdx" />
-          <button type="button" onclick="setJoinGether()" class="btn btn-success" >참여</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
-	
-	
-	 <!-- The Modal -->
-  <div class="modal fade" id="getherJoinCancle">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">모임상세정보</h4>
-          <button type="button" class="close" data-dismiss="modal">×</button>
-        </div>
-        <!-- Modal body -->
-        <div class="modal-body">
-          <div>모임장 : <span name="cGRName" id="cGRName"></span>(<span name="GRNickName" id="GRNickName"></span>)</div>
-          <div>모임명 : <span name="cjoinTitle" id="cjoinTitle"></span></div>
-          <div>모임형태 : <span name="cgetType" id="cgetType"></span></div>
-          <div>지역 : <span name="cgLocation" id="cgLocation"></span></div>
-          <div>인원수 : <span name="cgjm" id="cgjm"></span>/<span name="gtm" id="gtm"></span></div>
-          <div>거리 : <span name="cgDistance" id="cgDistance"></span>Km</div>
-          <div>획득고도 : <span name="cgHeight" id="cgHeight"></span>m</div>
-          <div>모임시간 : <span name="cgTime" id="cgTime"></span></div>
-          <div>구간상세 : <span name="cgDetail" id="cgDetail"></span></div>
-          
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
- 
-          <button type="button" onclick="setJoinGether()" class="btn btn-danger" >참가취소</button>
+          <button type="button" onclick="setChangeGether()" class="btn btn-success" >수정</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         </div>
         
@@ -371,6 +320,8 @@
       </div>
     </div>
   </div>
+		
+
 	
 <p><br/></p>
 <jsp:include page="/include/footer.jsp"/>

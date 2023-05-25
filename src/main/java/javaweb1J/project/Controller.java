@@ -30,7 +30,10 @@ import javaweb1J.project.board.boardRecommendUpdateCommand;
 import javaweb1J.project.gethering.GetheringInputOkCommand;
 import javaweb1J.project.gethering.GetheringmemberJoinOkCommand;
 import javaweb1J.project.gethering.SetGetheringPlanCommand;
+import javaweb1J.project.gethering.getherChangeOkCommand;
+import javaweb1J.project.gethering.getherMemberCheckListCommand;
 import javaweb1J.project.gethering.getheringListCommand;
+import javaweb1J.project.gethering.myGetheringListCommand;
 import javaweb1J.project.member.LoginCheckCommand;
 import javaweb1J.project.member.memberIdCheckCommand;
 import javaweb1J.project.member.memberLogoutCommand;
@@ -210,6 +213,16 @@ public class Controller extends HttpServlet{
 			command = new getheringListCommand();
 			command.execute(request, response);
 			viewPage +="/gethering/getheringList.jsp";
+		}
+		else if(com.equals("/myGetheringList")) { //내 모임 리스트 페이지
+			command = new myGetheringListCommand();
+			command.execute(request, response);
+			viewPage +="/gethering/myGetheringList.jsp";
+		}
+		else if(com.equals("/getherChangeOk")) { //내 모임창에서 모임 정보 수정하기.
+			command = new getherChangeOkCommand();
+			command.execute(request, response);
+			return;
 		}
 		else if(com.equals("/setGetheringPlan")) { //모임 등록페이지
 			command = new SetGetheringPlanCommand();

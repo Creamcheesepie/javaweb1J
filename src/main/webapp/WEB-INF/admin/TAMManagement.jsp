@@ -19,6 +19,36 @@
 		
 		}
 	</style>
+	<script>
+	'use strict'
+	
+	function deleteTam(idx){
+		let ans=confirm("정말로 삭제하시겠습니까?");
+		if(!ans){
+			return false;
+		}
+		else{
+			let ans=confirm("삭제하시면 복구되지 않습니다!");
+			if(!ans){
+				return false;
+			}
+			else{
+				$.ajax({
+					type:"post",
+					url:"setDeleteTAM.ad",
+					data:{idx:idx},
+					success:function(){
+						alert("대상 출석글을 삭제하였습니다.");
+						location.reload();
+					},
+					error:function(){
+						alert("전송오류가 발생하였습니다.");
+					}
+				})
+			}
+		}
+	}
+	</script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/header.jsp"/>
@@ -48,8 +78,7 @@
 				<div class="col-sm-1 mm p-0 m-0">${fn:substring(vo.wDate,0,16)}</div>
 				<div class="col-sm-1 mm p-0 m-0">${vo.aMid}</div>
 				<div class="col-sm-1 mm p-0 m-0">${vo.aNickName}</div>
-				<div class="col-sm-1 mm p-0 m-0"></div>
-				<div class="col-sm-1 mm p-0 m-0">&nbsp;</div>
+				<div class="col-sm-1 mm p-0 m-0"><input type="button" value="삭제" onclick="deleteTam(${vo.idx})"/></div>
 			</div>
 		</c:forEach>
 	</div>

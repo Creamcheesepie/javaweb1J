@@ -305,6 +305,22 @@ public class MemberDAO {
 		 
 		return vos;
 	}
+
+	public void setMemberLevel(int idx, int level) {
+		try {
+			sql="update member set level=? where idx=?";
+			pstmt =conn.prepareStatement(sql);
+			pstmt.setInt(1, level);
+			pstmt.setInt(2, idx);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " +e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+	}
 	
 	
 	
