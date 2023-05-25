@@ -53,6 +53,7 @@
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/header.jsp"/>
 <p><br/></p>	
+<jsp:include page="/include/adminTopMenu.jsp"/>	
 	<div class="container">
 		<h4>출석 한마디 관리</h4>
 		<hr style="margin: 4px 0px 4px 0px"/>

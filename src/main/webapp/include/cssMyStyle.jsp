@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <style>
 /* css스타일 맹그는 존 */
 
@@ -49,6 +51,17 @@
 }
 .skyblueHover{
 	transition: all .3s;
+}
+@font-face{
+	font-family:'nanumBarunGothic';
+	src : url('../fonts/nbg_n.ttf') format('truetype');
+}
+@font-face{
+	font-family:'jejugothic';
+	src : url('../fonts/JejuGothic.ttf') format('truetype');
+}
+.title-font{
+	font-family : 'jejugothic';
 }
 
 </style>

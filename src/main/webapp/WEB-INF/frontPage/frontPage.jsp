@@ -9,9 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Ride together</title>
 	<jsp:include page="/include/cssInitialize.jsp"/>
-	<script>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
-	</script>
+	<jsp:include page="/include/cssMyStyle.jsp"/>
 	<style>	
   /* Make the image fully responsive */
   .carousel-inner img {
@@ -27,6 +25,15 @@
   	margin : 0px;
   }
    a {  text-decoration: none;color: black;}
+   
+@font-face{
+	font-family:'jejugothic';
+	src : url('../fonts/JejuGothic.ttf') format('truetype');
+}
+h4 {
+	font-family : 'jejugothic';
+	font-weight : 800;
+}
 	</style>
  <jsp:include page="/include/bs4.jsp"/>
 </head>
@@ -107,7 +114,7 @@
 		<div class="row"><!-- 하단 최신글, 일정요약 -->
 			<div class="col-sm-6">
 				<div class="mt-2"><!-- 최신글 영역 그리드 시작 -->
-					<h3>최신글</h3> <!--  -->
+					<h4>최신글</h4> <!--  -->
 					<hr style="margin:8px"/>
 					<div class="row text-center mt-0">
 						<div class="col-sm-1 fBList p-0 m-0">번호</div>
@@ -132,7 +139,7 @@
 			</div>
 
 			<div class="col-sm-6 mt-2"><!-- 인기글 -->
-				<h3>인기글</h3> <!--  -->
+				<h4>인기글</h4> <!--  -->
 					<hr style="margin:8px"/>
 					<div class="row text-center mt-0">
 						<div class="col-sm-1 fBList p-0 m-0">번호</div>

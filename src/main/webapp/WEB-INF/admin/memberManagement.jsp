@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>회원 관리</title>
 	<jsp:include page="/include/bs4.jsp"/>
+	<jsp:include page="/include/cssMyStyle.jsp"/>
 	<style>
 		.msub{
 			font-size:12px;
@@ -17,6 +18,9 @@
 		.mm{
 			font-size:12px;
 		
+		}
+		body{
+		font-family : 'nanumBarunGothic';
 		}
 	</style>
 	<script>
@@ -50,10 +54,11 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/header.jsp"/>
-<p><br/></p>	
+<p><br/></p>
+<jsp:include page="/include/adminTopMenu.jsp"/>		
 	<div class="container">
 		<h4>회원 관리</h4>
-		<hr/>
+		<hr style="margin : 6px 0px 6px 0px "/>
 		<div><!-- 서브타이틀 div -->
 			<div class="row text-center">
 				<div class="col-sm-1 msub  p-0 m-0">회원번호</div>
