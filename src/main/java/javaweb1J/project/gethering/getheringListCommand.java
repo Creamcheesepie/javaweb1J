@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import javaweb1J.project.ProjectInterface;
 import javaweb1J.project.calendar.calender;
@@ -18,6 +19,8 @@ public class getheringListCommand implements ProjectInterface {
 		GetheringVO vo = new GetheringVO();
 		calender cal = new calender();
 		
+		HttpSession session= request.getSession();
+		int sMIdx= session.getAttribute("sMIdx")==null?0:(int)session.getAttribute("sMIdx");
 		int nowPage = request.getParameter("nowPage")==null?1:Integer.parseInt(request.getParameter("nowPage"));
 		int pageSize = request.getParameter("pageSize")==null?10:Integer.parseInt(request.getParameter("pageSize"));
 		
@@ -30,7 +33,7 @@ public class getheringListCommand implements ProjectInterface {
 		int curBlock = (nowPage-1)/blockSize;
 		int lastBlock = (totalPage-1)/blockSize;
 		
-		ArrayList<GetheringVO> vos = dao.getGetheringList(stIndexNo, pageSize);
+		ArrayList<GetheringVO> vos = dao.getGetheringList(stIndexNo, pageSize,sMIdx);
 		
 		request.setAttribute("vos", vos);
 		

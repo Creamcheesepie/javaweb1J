@@ -14,7 +14,7 @@ public class boardRecommendUpdateCommand implements ProjectInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int mIdx = request.getParameter("mIdx")==null?0:Integer.parseInt(request.getParameter("mIdx"));
 		int bIdx = request.getParameter("bIdx")==null?0:Integer.parseInt(request.getParameter("bIdx"));
-		int temp = 0;
+		
 		BoardDAO dao = new BoardDAO();
 		
 		BoardRecommendVO rvo = new BoardRecommendVO();

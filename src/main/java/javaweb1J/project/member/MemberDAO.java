@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import conn.GetConn;
 
@@ -238,6 +239,71 @@ public class MemberDAO {
 		}
 		
 		return res;
+	}
+
+	public int getTotalRecordCount() {
+		int trc = 0;
+		try {
+			sql="select count(idx) as cnt from member";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) trc=rs.getInt("cnt");
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류2 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+		return trc;
+	}
+
+	public ArrayList<MemberVO> getAllMemberList(int stIndexNo, int pageSize) {
+		 ArrayList<MemberVO> vos = new ArrayList<>();
+		 
+		 try {
+			sql = "select * from member order by idx desc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, stIndexNo);
+			pstmt.setInt(2, pageSize);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MemberVO vo = new MemberVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setSalt(rs.getString("salt"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setName(rs.getString("name"));
+				vo.setNickName(rs.getString("nickName"));
+				
+				vo.setEmail(rs.getString("email"));
+				vo.setTel(rs.getString("tel"));
+				vo.setBirthday(rs.getString("birthday"));
+				vo.setAge(rs.getInt("Age"));
+				vo.setGender(rs.getString("gender"));
+				
+				vo.setAddress(rs.getString("address"));
+				vo.setRideInfo(rs.getString("rideinfo"));
+				vo.setInst(rs.getString("inst"));
+				vo.setPhoto(rs.getString("photo"));
+				vo.setLevel(rs.getInt("level"));
+				
+				vo.setTotCnt(rs.getInt("totCnt"));
+				vo.setTodayCnt(rs.getInt("todayCnt"));
+				vo.setSignInDate(rs.getString("signInDate"));
+				vo.setLastVisit(rs.getString("lastVisit"));
+				vo.setMemberDel(rs.getString("memberDel"));
+				
+				vos.add(vo);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("sql 오류2 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		 
+		return vos;
 	}
 	
 	

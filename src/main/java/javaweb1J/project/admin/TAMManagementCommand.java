@@ -1,4 +1,4 @@
-package javaweb1J.project.board;
+package javaweb1J.project.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,18 +6,20 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import javaweb1J.project.ProjectInterface;
+import javaweb1J.project.todayAttendMent.TodayAttendMentDAO;
+import javaweb1J.project.todayAttendMent.TodayAttendMentVO;
 
-public class BoardListCommand implements ProjectInterface {
+public class TAMManagementCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BoardDAO dao =  new BoardDAO();
+		TodayAttendMentDAO dao = new TodayAttendMentDAO();
+		//페이징 처리
 		
 		int nowPage = request.getParameter("nowPage")==null?1:Integer.parseInt(request.getParameter("nowPage"));
-		int pageSize = request.getParameter("pageSize")==null?10:Integer.parseInt(request.getParameter("pageSize"));
+		int pageSize = request.getParameter("pageSize")==null?15:Integer.parseInt(request.getParameter("pageSize"));
 		
 		int trc = dao.getTotalRecordCount();
 		
@@ -29,18 +31,18 @@ public class BoardListCommand implements ProjectInterface {
 		int curBlock = (nowPage-1)/blockSize;
 		int lastBlock = (totalPage-1)/blockSize;
 		
-		ArrayList<BoardVO> vos = dao.getBoardList(stIndexNo, pageSize);
 		
+		ArrayList<TodayAttendMentVO> vos = dao.getTodayAttendMentList(stIndexNo,pageSize);
 		
 		request.setAttribute("vos", vos);
 		request.setAttribute("nowPage", nowPage);
-		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("cSSNo", cSSNo);
+		request.setAttribute("pageSize", pageSize);
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
-		request.setAttribute("lastBlock", lastBlock);		
-		
+		request.setAttribute("lastBlock", lastBlock);
+
 	}
 
 }

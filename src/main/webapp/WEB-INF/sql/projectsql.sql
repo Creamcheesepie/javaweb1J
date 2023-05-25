@@ -68,6 +68,8 @@ create table board(
 drop table board;
 desc board;
 
+select *, (select count(*) from b_reple where bIdx=b.idx) as repleCnt from board b order by repleCnt desc,idx desc limit 0,5;
+
 insert into board values(default,1,'안녕','테스트야',default,'192.168.0.1','관리',default,default);
 select * from board where midx=1 and title='안녕' order by idx desc limit 1;
 
@@ -144,3 +146,5 @@ create table getherJoinMember(
 );
 desc getherJoinMember;
 drop table getherJoinMember;
+
+select * ,(select mIdx from getherJoinMember where gIdx=g.idx and mIdx=? ) as joined from  gethering g;

@@ -29,7 +29,7 @@
 			success : function(res){
 				if(res=="1"){
 					alert("로그인에 성공하였습니다.");
-					location.reload();
+					location.href="${ctp}/";
 				}
 				else{
 					alert("로그인에 실패하였습니다. 아이디나 비밀번호를 확인해주세요.");
@@ -43,7 +43,7 @@
 </script>
 
 	  <!-- <a class="navbar-brand" href="http://localhost:9090/javaweb/">home</a> -->
-	  <a class="navbar-brand" href="${ctp}/">Ride together</a>
+	  <a class="navbar-brand" href="${ctp}/frontPage.cp">Ride together</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
@@ -81,6 +81,9 @@
 			      <a class="dropdown-item" href="#">친구목록</a>
 			      <a class="dropdown-item" href="#">쪽지함</a>
 			      <a class="dropdown-item" href="#">내 글 관리</a>
+			      <c:if test="${sLevel>3}">
+			      <a class="dropdown-item" href="${ctp}/adminPage.cp">관리페이지</a>
+			      </c:if>
 			    </div>
 			  </div>  
 	      </li>

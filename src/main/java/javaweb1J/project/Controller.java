@@ -15,6 +15,7 @@ import javaweb1J.project.member.MemberMyInfoUpdateFormCommand;
 import javaweb1J.project.member.MemberPwdResetCheckCommand;
 import javaweb1J.project.member.MidFinderCommand;
 import javaweb1J.project.member.SignInCheckCommand;
+import javaweb1J.project.admin.adminPageCommand;
 import javaweb1J.project.b_Reple.repleChangeOkCommand;
 import javaweb1J.project.b_Reple.repleDeleteOkCommand;
 import javaweb1J.project.b_Reple.repleWriteOkCommand;
@@ -26,6 +27,9 @@ import javaweb1J.project.board.BoardWriteFormCommand;
 import javaweb1J.project.board.BoardWriteOkCommand;
 import javaweb1J.project.board.boardAticleDeleteCommand;
 import javaweb1J.project.board.boardRecommendUpdateCommand;
+import javaweb1J.project.gethering.GetheringInputOkCommand;
+import javaweb1J.project.gethering.GetheringmemberJoinOkCommand;
+import javaweb1J.project.gethering.SetGetheringPlanCommand;
 import javaweb1J.project.gethering.getheringListCommand;
 import javaweb1J.project.member.LoginCheckCommand;
 import javaweb1J.project.member.memberIdCheckCommand;
@@ -52,7 +56,13 @@ public class Controller extends HttpServlet{
 		String com = uri.substring(uri.lastIndexOf("/"), uri.lastIndexOf("."));
 		
 		//회원가입창 이동
-		if(com.equals("/signInPage")) {
+		
+		if(com.equals("/frontPage")) {
+			command = new frontPageCommand();
+			command.execute(request, response);
+			viewPage +="/frontPage/frontPage.jsp";
+		}
+		else if(com.equals("/signInPage")) {
 			viewPage +="/signIn/signIn.jsp";
 		}
 		else if(com.equals("/signInCheck")) {
@@ -206,11 +216,27 @@ public class Controller extends HttpServlet{
 			command.execute(request, response);
 			viewPage +="/gethering/setGetheringPlanForm.jsp";
 		}
-		else if(com.equals("/getheringInputOk")) { //모임 등록페이지
-			command = new getheringInputOkCommand();
+		else if(com.equals("/getheringInputOk")) { //모임등록
+			command = new GetheringInputOkCommand();
 			command.execute(request, response);
 			viewPage ="/include/message.jsp";
 		}
+		else if(com.equals("/getheringmemberJoinOk")) {//모임참석
+			command = new GetheringmemberJoinOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/getherMemberCheckList")) {//모임참석회원 조회
+			command = new getherMemberCheckListCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/adminPage")) {//모임참석회원 조회
+			command = new adminPageCommand();
+			command.execute(request, response);
+			viewPage +="/admin/admin.jsp";
+		}
+		
 				
 		
 		

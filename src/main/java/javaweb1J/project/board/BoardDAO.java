@@ -51,6 +51,43 @@ public class BoardDAO {
 		}
 		return vos;
 	}
+	
+	public ArrayList<BoardVO> getBoardManagementList(int stIndexNo, int pageSize) {
+		ArrayList<BoardVO> vos = new ArrayList<>();
+		
+		try {
+			sql = "select *,"
+					+ " (select nickName from member where idx=b.midx)as aNickName,"
+					+ " (select mid from member where idx=b.midx)as aMid"
+					+ " from board b"
+					+ " order by idx desc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, stIndexNo);
+			pstmt.setInt(2, pageSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVO vo = new BoardVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setTitle(rs.getString("title"));
+				vo.setArticle(rs.getString("Article"));
+				vo.setmIdx(rs.getInt("mIdx"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setCategory(rs.getString("category"));
+				vo.setViewCnt(rs.getInt("viewCnt"));
+				vo.setRecommend(rs.getInt("recommend"));
+				vo.setaMid(rs.getString("aMid"));
+				vo.setaNickName(rs.getString("aNickName"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("sql 오류1 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vos;
+	}
 
 	public int getTotalRecordCount() {
 		int trc = 0;
@@ -279,6 +316,44 @@ public class BoardDAO {
 			getConn.pstmtClose();
 		}
 		
+	}
+
+	public ArrayList<BoardVO> getBoardBestList(int i, int j) {
+ArrayList<BoardVO> vos = new ArrayList<>();
+		
+		try {
+			sql = "select *,"
+					+ " (select nickName from member where idx=b.midx)as aNickName,"
+					+ " (select mid from member where idx=b.midx)as aMid,"
+					+ "	(select count(*) from b_reple where bIdx=b.idx) as repleCnt,"
+					+ "	(select count(viewCnt) from board where idx=b.idx) as BviewCnt"
+					+ " from board b"
+					+ " order by BviewCnt desc,repleCnt desc,idx desc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, i);
+			pstmt.setInt(2, j);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVO vo = new BoardVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setTitle(rs.getString("title"));
+				vo.setmIdx(rs.getInt("mIdx"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setCategory(rs.getString("category"));
+				vo.setViewCnt(rs.getInt("viewCnt"));
+				vo.setRecommend(rs.getInt("recommend"));
+				vo.setaMid(rs.getString("aMid"));
+				vo.setaNickName(rs.getString("aNickName"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("sql 오류1 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vos;
 	}
 
 	

@@ -1,4 +1,4 @@
-package javaweb1J.project.board;
+package javaweb1J.project.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,18 +6,19 @@ import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import javaweb1J.project.ProjectInterface;
+import javaweb1J.project.board.BoardDAO;
+import javaweb1J.project.board.BoardVO;
 
-public class BoardListCommand implements ProjectInterface {
+public class BoardMangementCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BoardDAO dao =  new BoardDAO();
 		
 		int nowPage = request.getParameter("nowPage")==null?1:Integer.parseInt(request.getParameter("nowPage"));
-		int pageSize = request.getParameter("pageSize")==null?10:Integer.parseInt(request.getParameter("pageSize"));
+		int pageSize = request.getParameter("pageSize")==null?15:Integer.parseInt(request.getParameter("pageSize"));
 		
 		int trc = dao.getTotalRecordCount();
 		
@@ -29,7 +30,7 @@ public class BoardListCommand implements ProjectInterface {
 		int curBlock = (nowPage-1)/blockSize;
 		int lastBlock = (totalPage-1)/blockSize;
 		
-		ArrayList<BoardVO> vos = dao.getBoardList(stIndexNo, pageSize);
+		ArrayList<BoardVO> vos = dao.getBoardManagementList(stIndexNo, pageSize);
 		
 		
 		request.setAttribute("vos", vos);
@@ -39,8 +40,8 @@ public class BoardListCommand implements ProjectInterface {
 		request.setAttribute("cSSNo", cSSNo);
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
-		request.setAttribute("lastBlock", lastBlock);		
-		
+		request.setAttribute("lastBlock", lastBlock);
+
 	}
 
 }

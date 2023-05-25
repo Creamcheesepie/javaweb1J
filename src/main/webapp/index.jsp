@@ -8,6 +8,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Ride together</title>
 	<jsp:include page="/include/cssInitialize.jsp"/>
+	<script>
+	window.onload = function(){
+		location.href="${ctp}/frontPage.cp"};
+	</script>
 	<style>	
   /* Make the image fully responsive */
   .carousel-inner img {
