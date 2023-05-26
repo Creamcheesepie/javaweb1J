@@ -23,6 +23,37 @@
 		 font-family : nanumBarunGothic;
 		}
 	</style>
+	<script>
+	'use strict'
+	
+	function boardAdminDelete(idx){
+		let ans = confirm("선택하신 게시글을 삭제하시겠습니까?");
+		if(!ans){
+			return false
+		}
+		else{
+			let ans = confirm("삭제하신 글은 복구되지 않습니다.\n삭제하시겠습니까?");
+			if(!ans){
+				return false
+			}
+			else{
+				$.ajax({
+					type:'post',
+					url:'${ctp}/boardAdminDelete.ad',
+					data : {idx:idx},
+					success:function(){
+						alert("선택하신 게시글을 삭제하였습니다.");
+						location.reload();
+					},
+					error:function(){
+						alert("전송오류가 발생하였습니다.")
+					}
+				})
+			}
+		}
+	}
+	
+	</script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/header.jsp"/>
@@ -51,7 +82,7 @@
 				<div class="col-sm-1 mm p-0 m-0">${vo.idx}</div>
 				<div class="col-sm-1 mm p-0 m-0">${vo.aMid}</div>
 				<div class="col-sm-1 mm p-0 m-0">${vo.aNickName}</div>
-				<div class="col-sm-1 mm p-0 m-0">${vo.title}</div>
+				<div class="col-sm-1 mm p-0 m-0"><a href="javascript:boardAdminDelete(${vo.idx})">${vo.title}</a></div>
 				<div class="col-sm-3 mm p-0 m-0">${vo.article}</div>
 				<div class="col-sm-1 mm p-0 m-0">${fn:substring(vo.wDate,0,16)}</div>
 				<div class="col-sm-1 mm p-0 m-0">${vo.hostIp}</div>

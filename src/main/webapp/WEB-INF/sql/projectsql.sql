@@ -30,6 +30,17 @@ create table member(
 desc member;
 drop table member;
 
+select count(idx) as mcnt from member ;
+select count(idx) as l0cnt from member where level=0 ;
+select count(idx) as l1cnt from member where level=1 ;
+select count(idx) as l2cnt from member where level=2 ;
+select count(idx) as l3cnt from member where level=3 ;
+select count(idx) as l4cnt from member where level=4 ;
+select count(idx) as l5cnt from member where level=5 ;
+select  (select count(idx) from member where level=4) as l4cnt,(select count(idx) from member where level=3) as l3cnt, count(idx) as l5cnt from member where level=5 ;
+select mid,nickname, count(idx) as newMember from member where signInDate >= date_add(now(),interval -24 hour);
+
+
 drop table todayAttendMent
 create table todayAttendMent(
 	idx					int not null auto_increment,
@@ -48,7 +59,9 @@ desc todayAttendMent;
 select *, (select nickName from member where idx=tam.midx)as aNickName, (select mid from member where idx=tam.midx)as aMid from todayAttendMent tam;
 
 select * from todayAttendMent where date_format(wDate,'%Y-%m-%d')="2023-05-22";
-
+select count(idx) as tamtoWeekupcnt from todayAttendMent where wdate >= date_add(now(),interval -7 day);
+select count(idx) as tamtodayupcnt from todayAttendMent where substring(wDate,1,10) = substring(date_add(now(),interval 0 day),1,10);
+select (select nickName from member where idx=tam.midx)as aNickName, (select mid from member where idx=tam.midx)as aMid from todayAttendMent tam where substring(wDate,1,10) = substring(date_add(now(),interval 0 day),1,10);
 
 create table board(
 	idx					int not null auto_increment,
@@ -67,6 +80,12 @@ create table board(
 );
 drop table board;
 desc board;
+
+
+select count(idx) as nbWCnt from board where  wdate >= date_add(now(),interval -7 day);
+select count(idx) as nbDCnt from board where  wdate = date_add(now(),interval 0 day);
+
+select count(idx) as tbCnt, (select count(idx) from board where  wDate >= date_add(now(),interval -7 day)) as nbWCnt, (select count(idx)  from board where wDate = date_add(now(),interval 0 day)) as nbDCnt from board;
 
 select *, (select count(*) from b_reple where bIdx=b.idx) as repleCnt from board b order by repleCnt desc,idx desc limit 0,5;
 
@@ -112,14 +131,14 @@ create table gethering(
 	getheringType			varchar(3) not null,
 	location 					varchar(30) not null,
 	
-	totalGetherMember int not null default 2,
+	totalGetherMember int not null default 2, /*아래랑 합쳐서 한칸에*/
 	getherJoinMember	int not null,
 	gpxFileName				varchar(100),
-	distance					int not null,
+	distance					int not null,  /*아래랑 합쳐서 한칸에*/
 	getHeight					int,
 	
 	detailCourse			text,
-	getherTime				datetime not null,
+	getherTime				datetime not null, 
 	wDate							datetime not null default now(),
 	hostIp						varchar(30),
 	
@@ -127,6 +146,9 @@ create table gethering(
 	on update cascade
 	on delete restrict
 );
+
+select count(idx) as tgCnt from gethering;
+select count(idx) as tgCnt,(select count(idx)from gethering where getherTime >= date_add(now(),interval -30 day)) as mgCnt,(select count(idx) from gethering where getherTime >= date_add(now(),interval -7 day)) as wgCnt from gethering;
 
 insert into gethering values(default,1,'모임기능 테스트','네, 테스트 중입니다.','관리','충청북도 청주시 흥덕구 복대동',100,34,'test.gpx',75,350,'흥덕구-옥산면-봉명동','2023-05-04',default,'192.168.50.88');
 desc gethering;

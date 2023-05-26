@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import conn.GetConn;
+import javaweb1J.project.admin.AdminVO;
 
 public class BoardDAO {
 	GetConn getConn = GetConn.getInstance();
@@ -356,7 +357,40 @@ ArrayList<BoardVO> vos = new ArrayList<>();
 		return vos;
 	}
 
-	
+	public AdminVO getAdminBInfoCnt() {
+		AdminVO vo =  new AdminVO();
+		try {
+			sql = "select count(idx) as tbCnt,"
+					+ " (select count(idx) from board where  wDate >= date_add(now(),interval -7 day)) as nbWCnt, "
+					+ " (select count(idx)  from board where wDate = date_add(now(),interval 0 day)) as nbDCnt"
+					+ " from board";
+			pstmt =  conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo.setTbCnt(rs.getInt("tbCnt"));
+				vo.setNbDCnt(rs.getInt("nbDCnt"));
+				vo.setNbWCnt(rs.getInt("nbWCnt"));
+			}
+		} catch (SQLException e) {
+			System.out.println("sql 오류1 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vo;
+	}
 
-	
+	public void setRecommendDelete(int idx) {
+		try {
+			sql="delete from boardrecommend where bidx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql 오류4 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
+
 }

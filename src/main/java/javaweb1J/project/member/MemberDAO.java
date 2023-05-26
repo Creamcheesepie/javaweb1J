@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import conn.GetConn;
+import javaweb1J.project.admin.AdminVO;
 
 public class MemberDAO {
 	GetConn getConn = GetConn.getInstance();
@@ -320,6 +321,66 @@ public class MemberDAO {
 		} finally {
 			getConn.pstmtClose();
 		}
+	}
+
+	public AdminVO getAdminMemberInfo() {
+		AdminVO vo = new AdminVO();
+		
+		try {
+			sql="select (select count(idx) from member where level=5) as l5cnt,"
+					+ " (select count(idx) from member where level=4) as l4cnt,"
+					+ " (select count(idx) from member where level=3) as l3cnt,"
+					+ " (select count(idx) from member where level=2) as l2cnt,"
+					+ " (select count(idx) from member where level=1) as l1cnt,"
+					+ " (select count(idx) from member where level=0) as l0cnt,"
+					+ "	(select count(idx) from member where signInDate >= date_add(now(),interval -24 hour)) as nmcnt,"
+					+ " count(idx) as mcnt from member";
+			pstmt = conn.prepareStatement(sql);
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				vo.setL5Cnt(rs.getInt("l5cnt"));
+				vo.setL4Cnt(rs.getInt("l4cnt"));
+				vo.setL3Cnt(rs.getInt("l3cnt"));
+				vo.setL2Cnt(rs.getInt("l2cnt"));
+				vo.setL1Cnt(rs.getInt("l1cnt"));
+				vo.setL0Cnt(rs.getInt("l0cnt"));
+				vo.setmCnt(rs.getInt("mcnt"));
+				vo.setNewMemberCnt(rs.getInt("nmcnt"));
+			}
+
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " +e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+
+		return vo;
+	}
+
+	public ArrayList<AdminVO> getAdminNewMemberInfo() {
+		ArrayList<AdminVO> vos = new ArrayList<>();
+		try {
+			sql = "select mid,nickName from member where signInDate >= date_add(now(),interval -24 hour) order by signInDate desc limit 0,5";
+			pstmt = conn.prepareStatement(sql);
+			rs= pstmt.executeQuery();
+			while(rs.next()) {
+				AdminVO vo = new AdminVO();
+				vo.setNmMid(rs.getString("mid"));
+				vo.setNmNickName(rs.getString("nickName"));
+				vos.add(vo);
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " +e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+		
+		
+		return vos;
 	}
 	
 	

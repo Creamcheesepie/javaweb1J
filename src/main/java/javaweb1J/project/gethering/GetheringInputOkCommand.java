@@ -32,7 +32,7 @@ public class GetheringInputOkCommand implements ProjectInterface {
 		String getherTime = mpr.getParameter("getherTime")==null?"":mpr.getParameter("getherTime");
 		String hostIp = mpr.getParameter("hostIp")==null?"":mpr.getParameter("hostIp");
 		String detailCourse = mpr.getParameter("detailCourse")==null?"":mpr.getParameter("detailCourse");
-		String gpxFileName = mpr.getFilesystemName("gpxFileName")==null?"":mpr.getFilesystemName("gpxFileName");
+		String gpxFileName = mpr.getFilesystemName("gpxFile")==null?"":mpr.getFilesystemName("gpxFile");
 		
 		GetheringDAO dao = new GetheringDAO();
 		GetheringVO vo = new GetheringVO();

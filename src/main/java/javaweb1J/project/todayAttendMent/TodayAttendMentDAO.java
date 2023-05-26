@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import conn.GetConn;
+import javaweb1J.project.admin.AdminVO;
 
 public class TodayAttendMentDAO {
 	GetConn getConn = GetConn.getInstance();
@@ -144,6 +145,63 @@ public class TodayAttendMentDAO {
 		
 		return res;
 	}
+
+	public AdminVO getAdminTAMcntInfo() {
+		 AdminVO vo = new AdminVO();
+		 
+		 try {
+			sql="select count(idx) as tamTCnt,"
+					+ " (select count(idx) from todayAttendMent where wdate >= date_add(now(),interval -7 day))as tamtoWeekupcnt, "
+					+ " (select count(idx) from todayAttendMent where substring(wDate,1,10) = substring(date_add(now(),interval 0 day),1,10)) as tamtodayupcnt "
+					+ " from todayAttendMent";
+			 pstmt = conn.prepareStatement(sql);
+			 rs = pstmt.executeQuery();
+			 if(rs.next()) {
+				 vo.setTamTCnt(rs.getInt("tamTCnt"));
+				 vo.setTamTodaycCnt(rs.getInt("tamtodayupcnt"));
+				 vo.setTamToWeekCnt(rs.getInt("tamtoWeekupcnt"));
+				 
+			 }
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vo;
+	}
+
+	public ArrayList<AdminVO> getAdminTAMnwcntInfo() {
+		ArrayList<AdminVO> vos =  new ArrayList<>();
+		try {
+			sql = "select"
+					+ " (select nickName from member where idx=tam.midx)as aNickName,"
+					+ " (select mid from member where idx=tam.midx)as aMid"
+					+ " from todayAttendMent tam "
+					+ " where substring(wDate,1,10) = substring(date_add(now(),interval 0 day),1,10)"
+					+ " order by wDate desc"
+					+ " limit 0,10";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				AdminVO vo = new AdminVO();
+				vo.setTwnMid(rs.getString("aMid"));
+				vo.setTwnNickName(rs.getString("aNickName"));
+				System.out.println(vo.getTwnNickName()); 
+				vos.add(vo);
+				
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류 : " + e);
+		} finally {
+			getConn.rsClose();
+		}
+		
+		return vos;
+	}
+
+	
 
 	
 	

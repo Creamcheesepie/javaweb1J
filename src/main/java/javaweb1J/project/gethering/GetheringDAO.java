@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import conn.GetConn;
+import javaweb1J.project.admin.AdminVO;
 
 public class GetheringDAO {
 	GetConn getConn = GetConn.getInstance();
@@ -306,6 +307,112 @@ public class GetheringDAO {
 			getConn.pstmtClose();
 		}
 		
+	}
+
+	public void setGetheringDelete(int idx) {
+		try {
+			sql="delete from gethering where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류3 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
+
+	public void setGetheringMemberDelete(int idx) {
+		try {
+			sql="delete from getherJoinMember where gIdx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류3 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+		
+	}
+
+	public AdminVO getAdminGInfoCnt() {
+		AdminVO vo = new AdminVO();
+		try {
+			sql="select count(idx) as tgCnt, "
+					+ " (select count(idx) from gethering where getherTime >= date_add(now(),interval -30 day) and getherTime <= date_add(now(),interval 0 day)) as mgCnt,"
+					+ " (select count(idx) from gethering where getherTime >= date_add(now(),interval -7 day) and getherTime <= date_add(now(),interval 0 day)) as wgCnt, "
+					+ " (select count(idx) from gethering where getherTime <= date_add(now(),interval 30 day) and getherTime >= date_add(now(),interval 0 day))  as nmgCnt,"
+					+ " (select count(idx) from gethering where getherTime <= date_add(now(),interval 7 day)  and getherTime >= date_add(now(),interval 0 day))  as nwgCnt "
+					+ " from gethering";
+			pstmt = conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo.setTgCnt(rs.getInt("tgCnt"));
+				vo.setMgCnt(rs.getInt("mgCnt"));
+				vo.setWgCnt(rs.getInt("wgCnt"));
+				vo.setNmgCnt(rs.getInt("nmgCnt"));
+				vo.setNwgCnt(rs.getInt("nwgCnt"));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류3 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+		return vo;
+	}
+
+	public ArrayList<GetheringVO> getAdminGetheringList() {
+		ArrayList<GetheringVO> vos = new ArrayList<>();
+		try {
+			sql = "select * ,"
+					+ " (select nickName from member where idx=g.midx) as aNickName,"
+					+ " (select mid from member where idx=g.midx)as aMid,"
+					+ " (select name from member where idx=g.midx)as aName"
+					+ " from gethering g"
+					+ "	where getherTime = date_add(now(),interval 0 day) "
+					+ " order by idx desc limit 0,5";
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				GetheringVO vo = new GetheringVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setmIdx(rs.getInt("mIdx"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString("content"));
+				vo.setGetheringType(rs.getString("getheringType"));
+				vo.setLocation(rs.getString("location"));
+				vo.setTotalGetherMember(rs.getInt("totalGetherMember"));
+				vo.setGetherJoinMember(rs.getInt("getherJoinMember"));
+				vo.setGpxFileName(rs.getString("gpxFileName"));
+				vo.setDistance(rs.getInt("distance"));
+				vo.setGetHeight(rs.getInt("getHeight"));
+				vo.setDetailCourse(rs.getString("detailCourse"));
+				vo.setGetherTime(rs.getString("getherTime"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setaNickName(rs.getString("aNickName"));
+				vo.setaMid(rs.getString("aMid"));
+				vo.setaName(rs.getString("aName"));
+				vo.setJoined(rs.getInt("joined"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("sql 오류19 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+
+		return vos;
+
 	}
 
 }

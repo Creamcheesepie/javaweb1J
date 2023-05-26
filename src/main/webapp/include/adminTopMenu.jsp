@@ -15,6 +15,6 @@
 <a href="${ctp}/memberManagement.ad">회원관리</a> | 
 <a href="${ctp}/TAMManagement.ad">출석 한마디 관리</a> | 
 <a href="${ctp}/boardMangement.ad">게시판 관리</a> | 
-모임관리
+<a href="${ctp}/getheringManagement.ad">모임관리</a>
 
 </div>

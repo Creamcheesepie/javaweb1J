@@ -143,6 +143,7 @@
 					</div>
 				</div>
 				<hr style="margin: 3px 0px 3px 0px; padding : 0px;">
+				
 				<div class="row">
 					<div class="col ml-0 pl-0">
 					
@@ -202,7 +203,7 @@
 						</div>
 						
 					</div>
-
+				
 				
 			</div><!-- 사이드바 영역끝 -->
 			<div class="col-sm-10"><!-- 오른쪽 모임정보 영역 -->
@@ -238,7 +239,7 @@
 					</div>
 					<div class="col-sm-8 text-right">
 					<c:if test="${sMIdx!=null}">
-					<input type="button" value="gpx파일 다운로드" class="btn btn-primary">
+					<input type="button" value="gpx파일 다운로드" onclick="location.href='${ctp}/getheringGPXFileDownload.cp?file=${vo.gpxFileName}'" class="btn btn-primary">
 					</c:if>
 					<c:if test="${sMIdx!=vo.mIdx && sMIdx!=null && vo.joined!=sMIdx && vo.getherJoinMember < vo.totalGetherMember}">
 						<input type="button" value="참가" onclick="getherJoinOpen('${vo.title}','${vo.content}','${vo.getheringType}','${vo.location}','${vo.totalGetherMember}','${vo.getherJoinMember}','${vo.gpxFileName}','${vo.distance}','${vo.getHeight}','${vo.detailCourse}','${vo.getherTime}','${vo.aName}','${vo.aNickName}','${vo.idx}')" class="btn btn-success">

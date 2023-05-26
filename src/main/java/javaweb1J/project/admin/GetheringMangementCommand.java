@@ -1,4 +1,4 @@
-package javaweb1J.project.gethering;
+package javaweb1J.project.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import javaweb1J.project.ProjectInterface;
-import javaweb1J.project.calendar.calender;
+import javaweb1J.project.gethering.GetheringDAO;
+import javaweb1J.project.gethering.GetheringVO;
 
-public class getheringListCommand implements ProjectInterface {
+public class GetheringMangementCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GetheringDAO dao = new GetheringDAO();
-		GetheringVO vo = new GetheringVO();
-		calender cal =  new calender();
+
 		
 		HttpSession session= request.getSession();
 		int sMIdx= session.getAttribute("sMIdx")==null?0:(int)session.getAttribute("sMIdx");
@@ -44,7 +44,6 @@ public class getheringListCommand implements ProjectInterface {
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);
-		cal.service(request, response);
 	}
 
 }

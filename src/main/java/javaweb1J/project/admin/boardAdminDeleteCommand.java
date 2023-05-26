@@ -1,4 +1,4 @@
-package javaweb1J.project.board;
+package javaweb1J.project.admin;
 
 import java.io.IOException;
 
@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import javaweb1J.project.ProjectInterface;
 import javaweb1J.project.b_Reple.B_RepleDAO;
+import javaweb1J.project.board.BoardDAO;
 
-public class boardAticleDeleteCommand implements ProjectInterface {
+public class boardAdminDeleteCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -17,9 +18,10 @@ public class boardAticleDeleteCommand implements ProjectInterface {
 		
 		BoardDAO dao = new BoardDAO();
 		B_RepleDAO repleDao = new B_RepleDAO();
+		
 		dao.setRecommendDelete(idx);
 		repleDao.setBoardRepleDelete(idx);//글에 달린 댓글 먼저 삭제
-
+	
 		dao.setBoardArticle(idx);
 
 	}

@@ -32,6 +32,7 @@ import javaweb1J.project.gethering.GetheringmemberJoinOkCommand;
 import javaweb1J.project.gethering.SetGetheringPlanCommand;
 import javaweb1J.project.gethering.getherChangeOkCommand;
 import javaweb1J.project.gethering.getherMemberCheckListCommand;
+import javaweb1J.project.gethering.getheringGPXFileDownloadCommand;
 import javaweb1J.project.gethering.getheringListCommand;
 import javaweb1J.project.gethering.myGetheringListCommand;
 import javaweb1J.project.member.LoginCheckCommand;
@@ -244,7 +245,12 @@ public class Controller extends HttpServlet{
 			command.execute(request, response);
 			return;
 		}
-		else if(com.equals("/adminPage")) {//모임참석회원 조회
+		else if(com.equals("/getheringGPXFileDownload")) {//모임gpx파일 다운로드
+			command = new getheringGPXFileDownloadCommand();
+			command.execute(request, response);
+			viewPage +="/gethering/myGetheringList.jsp";
+		}
+		else if(com.equals("/adminPage")) {//운영자 페이지 프론트 이동
 			command = new adminPageCommand();
 			command.execute(request, response);
 			viewPage +="/admin/admin.jsp";

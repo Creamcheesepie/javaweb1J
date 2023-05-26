@@ -55,6 +55,21 @@ public class AdminController extends HttpServlet {
 				command.execute(request, response);
 				return;
 			}
+			else if(com.equals("/getheringManagement")) { //
+				command = new GetheringMangementCommand();
+				command.execute(request, response);
+				viewPage +="/admin/getheringManagement.jsp";
+			}
+			else if(com.equals("/setGetheringDelete")) { //
+				command = new setGetheringDeleteCommand();
+				command.execute(request, response);
+				viewPage +="/admin/getheringManagement.jsp";
+			}
+			else if(com.equals("/boardAdminDelete")) { //
+				command = new boardAdminDeleteCommand();
+				command.execute(request, response);
+				return;
+			}
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
