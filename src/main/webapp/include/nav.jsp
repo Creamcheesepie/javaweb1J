@@ -78,11 +78,11 @@
 			  	<button type="button" class="btn nav-link text-light dropdown-toggle" id="navbardrop" data-toggle="dropdown">개인정보</button>
 			   	<div class="dropdown-menu">
 			      <a class="dropdown-item" href="${ctp}/myInfoView.cp">내 정보</a>
-			      <a class="dropdown-item" href="#">친구목록</a>
-			      <a class="dropdown-item" href="#">쪽지함</a>
+			      <a class="dropdown-item" href="${ctp}/friendList.cp">친구목록</a>
+			      <a class="dropdown-item" href="${ctp}/messageList.cp">쪽지함</a>
 			      <a class="dropdown-item" href="#">내 글 관리</a>
 			      <c:if test="${sLevel>3}">
-			      <a class="dropdown-item" href="${ctp}/adminPage.cp">관리페이지</a>
+			      <a class="dropdown-item" href="${ctp}/adminPage.ad">관리페이지</a>
 			      </c:if>
 			    </div>
 			  </div>  

@@ -92,20 +92,20 @@
 			</div>
 		<hr style="margin : 6px 0px 6px 0px "/>
 		</c:forEach>
-		<div class="row text-center">
-					<div class="col">
-						<ul class="pagination text-center justify-content-center border-secondary">	
-							<c:if test="${nowPage>1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=1">첫페이지</a></li></c:if>
-							<c:if test="${curBlock>0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=${(curBlock-1)*blockSize+1}">이전블록</a></li></c:if>
-							<c:forEach var="i" begin="${curBlock*blockSize+1}" end="${curBlock*blockSize + blockSize}" varStatus="st">
-								<c:if test="${i<=totalPage && i== nowPage}"><li class="page-item active bg-secondary"><a class="page-link bg-secondary" href="#">${i}</a></li></c:if>
-								<c:if test="${i<=totalPage && i!= nowPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=${i}">${i}</a></li></c:if>
-							</c:forEach>
-							<c:if test="${curBlock<lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=${(curBlock+1)*blockSize+1}">다음블록</a></li></c:if>
-							<c:if test="${nowPage<totalPage}"><li class="page-item"><a class="page-link  text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=${totalPage}">마지막페이지</a></li></c:if>
-						</ul>
-					</div>
-				</div>
+		<div class="row text-center mt-3">
+			<div class="col">
+				<ul class="pagination text-center justify-content-center border-secondary">	
+					<c:if test="${nowPage>1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=1">첫페이지</a></li></c:if>
+					<c:if test="${curBlock>0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=${(curBlock-1)*blockSize+1}">이전블록</a></li></c:if>
+					<c:forEach var="i" begin="${curBlock*blockSize+1}" end="${curBlock*blockSize + blockSize}" varStatus="st">
+						<c:if test="${i<=totalPage && i== nowPage}"><li class="page-item active bg-secondary"><a class="page-link bg-secondary" href="#">${i}</a></li></c:if>
+						<c:if test="${i<=totalPage && i!= nowPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=${i}">${i}</a></li></c:if>
+					</c:forEach>
+					<c:if test="${curBlock<lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=${(curBlock+1)*blockSize+1}">다음블록</a></li></c:if>
+					<c:if test="${nowPage<totalPage}"><li class="page-item"><a class="page-link  text-secondary" href="${ctp}/boardManagement.ad?pageSize=${pageSize}&nowPage=${totalPage}">마지막페이지</a></li></c:if>
+				</ul>
+			</div>
+		</div>
 	</div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp"/>

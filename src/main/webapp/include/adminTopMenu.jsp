@@ -7,9 +7,10 @@
 		float : left
 		
 	}
+	
 </style>
 <div class="text-center">
-<h4>관리자 페이지</h4>
+<h4><a href="${ctp}/adminPage.ad">관리자 페이지</a></h4>
 </div>
 <div class="ad_topmenu text-center">
 <a href="${ctp}/memberManagement.ad">회원관리</a> | 

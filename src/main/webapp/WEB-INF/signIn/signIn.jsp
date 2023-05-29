@@ -295,7 +295,7 @@
 	
 	</script>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <jsp:include page="/include/header.jsp"/>
 <p><br/></p>	
 	<div class="container">

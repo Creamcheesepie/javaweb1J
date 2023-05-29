@@ -42,10 +42,16 @@ public class B_RepleDAO {
 		ArrayList<B_RepleVO> vos = new ArrayList<>();
 		
 		try {
-			sql="select *, "
-					+ " (select nickName from member where idx=r.midx)as aNickName,"
-					+ " (select mid from member where idx=r.midx)as aMid"
-					+ " from b_reple r where bIdx=? order by idx limit ?,?";
+			sql="select "
+					+ "		r.*, "
+					+ " 	m.NickName,"
+					+ "		m.MId"
+					+ " from b_reple r,"
+					+ "			 member m"
+					+ "		where		m.idx=r.mIdx"
+					+ "		and			r.bIdx=?"
+					+ " 	order by idx desc "
+					+ "		limit ?,?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			pstmt.setInt(2, stIndexNo);
@@ -60,8 +66,8 @@ public class B_RepleDAO {
 				vo.setmIdx(rs.getInt("mIdx"));
 				vo.setReple(rs.getString("reple"));
 				vo.setwTime(rs.getString("wTime"));
-				vo.setaMid(rs.getString("aMid"));
-				vo.setaNickName(rs.getString("aNickName"));
+				vo.setaMid(rs.getString("Mid"));
+				vo.setaNickName(rs.getString("NickName"));
 				vos.add(vo);
 			}
 			

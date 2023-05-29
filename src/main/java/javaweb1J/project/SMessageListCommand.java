@@ -1,26 +1,31 @@
-package javaweb1J.project.board;
+package javaweb1J.project;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale.Category;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import javaweb1J.project.ProjectInterface;
+import javaweb1J.project.message.MessageDAO;
+import javaweb1J.project.message.MessageVO;
 
-public class BoardListCommand implements ProjectInterface {
+public class SMessageListCommand implements ProjectInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BoardDAO dao =  new BoardDAO();
+		HttpSession session = request.getSession();
 		
-		int nowPage = request.getParameter("nowPage")==null?1:Integer.parseInt(request.getParameter("nowPage"));
-		int pageSize = request.getParameter("pageSize")==null?10:Integer.parseInt(request.getParameter("pageSize"));
-		int trc = dao.getTotalRecordCount();
-		String category = request.getParameter("category")==null?"":request.getParameter("category");
+		int sMIdx = session.getAttribute("sMIdx")==null?0:(int)session.getAttribute("sMIdx");
+		
+		
+		MessageDAO dao = new MessageDAO();
+		
+		int nowPage = request.getParameter("nowPage")==null?1:Integer.parseInt(request.getParameter("nowPage")); 
+		int pageSize = request.getParameter("pageSize")==null?20:Integer.parseInt(request.getParameter("pageSize"));
+		
+		int trc= dao.getMessageTotalRecordCount(sMIdx);
 		
 		int totalPage =(trc%pageSize)==0?(trc/pageSize) : (trc/pageSize)+1;
 		int stIndexNo = (nowPage - 1 )*pageSize;
@@ -30,17 +35,10 @@ public class BoardListCommand implements ProjectInterface {
 		int curBlock = (nowPage-1)/blockSize;
 		int lastBlock = (totalPage-1)/blockSize;
 		
-		ArrayList<BoardVO> vos = new ArrayList<>();
+		ArrayList<MessageVO> vos = dao.getSendMessageList(sMIdx,stIndexNo,pageSize);
 		
-		if(!category.equals("")) {
-			vos = dao.getBoardCatrgoryList(category,stIndexNo, pageSize);
-			
-		}
-		else {
-			vos = dao.getBoardList(stIndexNo, pageSize);
-		}
-
-		request.setAttribute("category", category);
+		
+		
 		request.setAttribute("vos", vos);
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("pageSize", pageSize);
@@ -48,8 +46,8 @@ public class BoardListCommand implements ProjectInterface {
 		request.setAttribute("cSSNo", cSSNo);
 		request.setAttribute("blockSize", blockSize);
 		request.setAttribute("curBlock", curBlock);
-		request.setAttribute("lastBlock", lastBlock);		
-		
+		request.setAttribute("lastBlock", lastBlock);
+
 	}
 
 }

@@ -15,11 +15,13 @@ public class BoardChagneFormCommand implements ProjectInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idx = request.getParameter("idx")==null?0:Integer.parseInt(request.getParameter("idx"));
 		int nowPage = request.getParameter("nowPage")==null?1:Integer.parseInt(request.getParameter("nowPage")); 
-		int pageSize = request.getParameter("pageSize")==null?5:Integer.parseInt(request.getParameter("pageSize")); 
+		int pageSize = request.getParameter("pageSize")==null?5:Integer.parseInt(request.getParameter("pageSize"));
+		String category = request.getParameter("category")==null?"":request.getParameter("category");
 		
 		BoardDAO dao = new BoardDAO();
 		BoardVO vo = dao.getBoardArticleByIdx(idx);
 		
+		request.setAttribute("category", category);
 		request.setAttribute("idx", idx);
 		request.setAttribute("vo", vo);
 		request.setAttribute("nowPage", nowPage);

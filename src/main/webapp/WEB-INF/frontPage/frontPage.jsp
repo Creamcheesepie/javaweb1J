@@ -64,7 +64,7 @@ h4 {
 						</c:if>
 					</div>
 				</div>
-				<div class="row mt-3">
+				<div class="row mt-2">
 					<div class="col" style="height:275px"><!-- 일정표 표시 영역 -->
 						<h4><i class="fa-light fa-person-biking"></i>모임 일정</h4>
 						<hr style="margin : 8px 0px 8px 0px"/>

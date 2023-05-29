@@ -121,6 +121,29 @@
 		})
 		
 	}
+	
+	function friendApply(tIdx,sMIdx){
+		let ans = confirm("친구신청 하시겠습니까?");
+		
+		if(!ans){
+			return false;
+		}
+		else{
+			$.ajax({
+				type:'submit',
+				url:'${ctp}/sendFriendApply.cp',
+				data:{tIdx:tIdx,sMIdx:sMIdx},
+				success:function(){
+					alert("정상적으로 신청하였습니다.");
+				},
+				error : function(){
+					alert("오류가 발생하였습니다.");
+				}
+			})
+		}
+		
+	}
+	
 	</script>
 	<jsp:include page="/include/cssMyStyle.jsp"/>
 </head>
@@ -130,7 +153,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-2"><!-- 사이드바 시작 -->
-				사이드바
+				
 			</div><!-- 사이드바 마지막 -->
 			<div class="col-sm-10"><!-- 본문부 시작 -->
 				<div class="row">
@@ -175,13 +198,13 @@
 								<input type="button" value="추천취소" onclick="boardRecommend('${sMIdx}','${vo.idx}')" class="btn redHover">
 								</c:if>
 							</c:if>
-						<input type="button" value="돌아가기" onclick="location.href='${ctp}/boardList.cp?pageSize=${pageSize}&nowPage=${nowPage}'" class="btn btn-info">
+						<input type="button" value="돌아가기" onclick="location.href='${ctp}/boardList.cp?pageSize=${pageSize}&nowPage=${nowPage}&category=${category}'" class="btn btn-info">
 						</c:if>
 						<c:if test="${sMIdx==vo.mIdx}">
 							<form name="boardChangeIdx" method="post" action="${ctp}/boardChagneForm.cp">
 							<input type="submit" value="수정" class="btn btn-success">
 							<input type="hidden" name="idx" id="idx" value="${vo.idx}"/>
-						<input type="button" value="돌아가기" onclick="location.href='${ctp}/boardList.cp?pageSize=${pageSize}&nowPage=${nowPage}'" class="btn btn-info">
+							<input type="button" value="돌아가기" onclick="location.href='${ctp}/boardList.cp?pageSize=${pageSize}&nowPage=${nowPage}&category=${category}'" class="btn btn-info"><!-- 폼테그때문에 중복. -->
 							</form>
 						</c:if>
 					</div>
@@ -218,22 +241,48 @@
 					<input type="hidden" name="boardIdx" id="boardIdx" value="${vo.idx}"/>
 					<div class="col-sm-2 m-0 p-0"><input name="repleup" id="repleup" type="button" onclick="repleCheck()" value="댓글달기" class="form-control grayHover" style="height:100%"></div>
 				</div>
-				<div>
+				<div class="mt-3">
 					<ul class="pagination text-center justify-content-center border-secondary">	
-						<c:if test="${r_nowPage>1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=1">첫페이지</a></li></c:if>
-						<c:if test="${r_curBlock>0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=${(r_curBlock-1)*r_blockSize+1}">이전블록</a></li></c:if>
+						<c:if test="${r_nowPage>1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=1&category=${category}">첫페이지</a></li></c:if>
+						<c:if test="${r_curBlock>0}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=${(r_curBlock-1)*r_blockSize+1}&category=${category}">이전블록</a></li></c:if>
 						<c:forEach var="i" begin="${r_curBlock*r_blockSize+1}" end="${r_curBlock*r_blockSize + r_blockSize}" varStatus="st">
 							<c:if test="${i<=r_totalPage && i== r_nowPage}"><li class="page-item active bg-secondary"><a class="page-link bg-secondary" href="#">${i}</a></li></c:if>
-							<c:if test="${i<=r_totalPage && i!= r_nowPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=${i}">${i}</a></li></c:if>
+							<c:if test="${i<=r_totalPage && i!= r_nowPage}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=${i}&category=${category}">${i}</a></li></c:if>
 						</c:forEach>
-						<c:if test="${r_curBlock<r_lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=${(r_curBlock+1)*r_blockSize+1}">다음블록</a></li></c:if>
-						<c:if test="${r_nowPage<r_totalPage}"><li class="page-item"><a class="page-link  text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=${r_totalPage}">마지막페이지</a></li></c:if>
+						<c:if test="${r_curBlock<r_lastBlock}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=${(r_curBlock+1)*r_blockSize+1}&category=${category}">다음블록</a></li></c:if>
+						<c:if test="${r_nowPage<r_totalPage}"><li class="page-item"><a class="page-link  text-secondary" href="${ctp}/boardRead.cp?pageSize=${pageSize}&nowPage=${nowPage}&idx=${vo.idx}&r_pageSize=${r_pageSize}&r_nowPage=${r_totalPage}&category=${category}">마지막페이지</a></li></c:if>
 					</ul>
 				</div>
 			</div><!-- 본문부 바닥 -->
 		</div><!-- 그리드 전체부분 마지막 -->
 	</div><!-- 전체 컨테이너 마지막 -->
 	<!-- 댓글 수정 모달 -->
+<div class="modal fade" id="repleAdjust">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">댓글 수정</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div><!-- 모달 헤더 끝 -->
+      <!-- 모달 바디 -->
+      <div class="modal-body">
+      <h4>내용</h4>
+      	<input type="text" name="repleChange" id="repleChange" class="form-control"/>
+      	<input type="hidden" name="repleChangeIdx" id="repleChangeIdx"/>
+      </div><!-- 모달 바디 끝 -->
+      <!-- 모달 푸터  -->
+      <div class="modal-footer">
+        <button type="button" class="btn greenHover" onclick="repleChange()" data-dismiss="modal">수정</button>
+        <button type="button" class="btn redHover" onclick="repleDelete()" data-dismiss="modal">삭제</button>
+        <button type="button" class="btn yellowHover" data-dismiss="modal">닫기</button>
+      </div><!-- 모달 푸터 끝 -->
+    </div>
+  </div>
+</div>
+<!-- 댓글 수정 모달 끝 -->
+	<!-- 신고 관련 모달 -->
 <div class="modal fade" id="repleAdjust">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

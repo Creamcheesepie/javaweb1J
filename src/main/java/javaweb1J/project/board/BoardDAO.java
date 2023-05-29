@@ -393,4 +393,42 @@ ArrayList<BoardVO> vos = new ArrayList<>();
 		
 	}
 
+	public ArrayList<BoardVO> getBoardCatrgoryList(String category, int stIndexNo, int pageSize) {
+		ArrayList<BoardVO> vos = new ArrayList<>();
+		
+		try {
+			sql = "select *,"
+					+ " (select nickName from member where idx=b.midx)as aNickName,"
+					+ " (select mid from member where idx=b.midx)as aMid"
+					+ " from board b"
+					+ " where category=?"
+					+ " order by idx desc limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, category);
+			pstmt.setInt(2, stIndexNo);
+			pstmt.setInt(3, pageSize);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVO vo = new BoardVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setTitle(rs.getString("title"));
+				vo.setmIdx(rs.getInt("mIdx"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setCategory(rs.getString("category"));
+				vo.setViewCnt(rs.getInt("viewCnt"));
+				vo.setRecommend(rs.getInt("recommend"));
+				vo.setaMid(rs.getString("aMid"));
+				vo.setaNickName(rs.getString("aNickName"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("sql 오류1 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		return vos;
+	}
+
 }

@@ -19,6 +19,8 @@ public class BoardReadFormCommand implements ProjectInterface {
 		int nowPage = request.getParameter("nowPage")==null?1:Integer.parseInt(request.getParameter("nowPage")); 
 		int pageSize = request.getParameter("pageSize")==null?5:Integer.parseInt(request.getParameter("pageSize")); 
 		int idx = request.getParameter("idx")==null?0:Integer.parseInt(request.getParameter("idx"));
+		String category = request.getParameter("category")==null?"":request.getParameter("category");
+		request.setAttribute("category", category);
 		
 		BoardDAO dao = new BoardDAO();
 		BoardVO  vo = new BoardVO();

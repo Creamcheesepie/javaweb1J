@@ -33,6 +33,7 @@ public class MemberManagementCommand implements ProjectInterface {
 		
 		ArrayList<MemberVO> vos = dao.getAllMemberList(stIndexNo, pageSize);
 		
+		
 		request.setAttribute("vos", vos);
 		request.setAttribute("nowPage", nowPage);
 		request.setAttribute("pageSize", pageSize);

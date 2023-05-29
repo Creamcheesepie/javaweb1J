@@ -9,9 +9,9 @@
 	<title>모임 일정 등록</title>
 	<jsp:include page="/include/bs4.jsp"/>
 	<jsp:include page="/include/cssMyStyle.jsp"/>
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=6w9x1oz9xe"></script>
 <script>
 	'use strict';
-	
 	function getheringInputSubmit(){
 		let title = $("#title").val();
 		let content = $("#content").val();
@@ -172,6 +172,19 @@
 						<div class="col-sm-1 align-self-center p-0">gpx파일</div>
 						<div class="col-sm-4 align-self-center p-0"><input type="file" id="gpxFile" name="gpxFile" class="form-control-file"></div>
 					</div>
+				<div class="row mt-3 mb-3">
+					<div class="col">
+				   	<div id="map" style="width:100%;height:400px;"></div>
+				    <script>
+							var mapOptions = {
+							    center: new naver.maps.LatLng(37.576073,126.976923),
+							    zoom: 15
+							};
+							
+							var map = new naver.maps.Map('map', mapOptions);
+						</script>
+					</div>
+				</div>
 				<hr/>
 					<div class="row text-center mt-2">
 						<div class="col-sm-1 align-self-center">내용</div>

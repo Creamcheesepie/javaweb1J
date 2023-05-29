@@ -86,6 +86,7 @@ select count(idx) as nbWCnt from board where  wdate >= date_add(now(),interval -
 select count(idx) as nbDCnt from board where  wdate = date_add(now(),interval 0 day);
 
 select count(idx) as tbCnt, (select count(idx) from board where  wDate >= date_add(now(),interval -7 day)) as nbWCnt, (select count(idx)  from board where wDate = date_add(now(),interval 0 day)) as nbDCnt from board;
+select count(idx) as tbCnt, count(CASE WHEN wDate >= date_add(now(),interval -7 day then 1) as nbWCnt from member;
 
 select *, (select count(*) from b_reple where bIdx=b.idx) as repleCnt from board b order by repleCnt desc,idx desc limit 0,5;
 
@@ -121,6 +122,16 @@ create table b_reple(
 );
 desc b_reple;
 drop table b_reple;
+select	r.*,
+				m.NickName,
+				m.Mid
+from 			b_reple r,
+					member m
+	where			m.idx=r.mIdx 
+	and				r.bidx=1 
+	order by idx desc
+	limit 0,5;
+					
 
 create table gethering(
 	idx								int not null auto_increment primary key,
@@ -149,6 +160,7 @@ create table gethering(
 
 select count(idx) as tgCnt from gethering;
 select count(idx) as tgCnt,(select count(idx)from gethering where getherTime >= date_add(now(),interval -30 day)) as mgCnt,(select count(idx) from gethering where getherTime >= date_add(now(),interval -7 day)) as wgCnt from gethering;
+select g.* ,m.nickName , m.Name,m.mid,(select mIdx from getherJoinMember where gIdx=g.idx and mIdx=2 ) as joined from gethering g, member m where g.midx=m.idx order by idx  desc limit 0,5
 
 insert into gethering values(default,1,'모임기능 테스트','네, 테스트 중입니다.','관리','충청북도 청주시 흥덕구 복대동',100,34,'test.gpx',75,350,'흥덕구-옥산면-봉명동','2023-05-04',default,'192.168.50.88');
 desc gethering;
@@ -168,5 +180,65 @@ create table getherJoinMember(
 );
 desc getherJoinMember;
 drop table getherJoinMember;
-
 select * ,(select mIdx from getherJoinMember where gIdx=g.idx and mIdx=? ) as joined from  gethering g;
+
+
+create table friend(
+	mIdx int not null,
+	fIdx int not null,
+	FnB TINYINT not null,
+	foreign key(mIdx) references member(idx)
+	on update cascade
+	on delete restrict,
+	foreign key(fIdx) references member(idx)
+	on update cascade
+	on delete restrict
+);
+
+drop table friend;
+insert into friend values(1,2,1);
+insert into friend values(1,3,3);
+insert into friend values(1,4,2);
+select fIdx from friend where mIdx=1 and FnB=1
+
+select * from member where idx=(select fidx from friend where mIdx=1 and fnb=1);
+select m.* 
+from 			member m, 
+					friend f 
+	where  m.idx=f.fIdx
+	and f.midx=1 
+	and f.fnb=1;
+
+select *,(select fnb from friend where fidx=(select fidx from friend where mIdx=1 and fnb<1)) as fnb from memberwhere idx=(select fidx from friend where mIdx=1 and fnb<1);
+
+select  a.mid,
+				a.nickName,
+				b.fnb
+from			MEMBER A,
+					FRIEND B
+	where	a.idx		=B.fIdx
+	AND		B.fnb	IN	('2','3')
+	AND		B.mIdx 	='1'
+
+create table message(
+	idx int not null auto_increment primary key,
+	sIdx int not null,  					/* 송신자 idx */
+	rIdx int not null, 						/* 수신자 idx */
+	title varchar(30) not null,		/* 제목 */
+	content text not null,				/* 내용 */
+	sDate datetime not null DEFAULT now(), 			/* 전송시간 */
+	rDate datetime,								/* 읽은시간 */
+	rCheck tinyint,								/* 읽음여부 0=읽지 않음 1= 읽음 */
+	messageType tinyint not null, /* 쪽지 종류 0=공지사항 1=알림 2=친구신청 3=잡담 4=문의 5=신고 */
+	foreign key(sIdx) references member(idx)
+	on update cascade
+	on delete restrict
+);
+
+drop table message;
+
+select m.*,s.mid,s.nickName,s.Name,s.email from message m,member s where m.sIdx=s.Idx and rIdx=1 order by idx desc limit 0,20;
+
+
+
+

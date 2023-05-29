@@ -95,7 +95,7 @@
 			<hr style="margin : 4px 0px 4px 0px"/>
 		</c:forEach>
 		<!-- 페이지 처리 선택자 -->
-				<div class="row text-center">
+				<div class="row text-center mt-3">
 					<div class="col">
 						<ul class="pagination text-center justify-content-center border-secondary">	
 							<c:if test="${nowPage>1}"><li class="page-item"><a class="page-link text-secondary" href="${ctp}/getheringManagement.ad?pageSize=${pageSize}&nowPage=1">첫페이지</a></li></c:if>

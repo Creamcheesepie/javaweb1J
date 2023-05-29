@@ -102,7 +102,7 @@
 					</div>
 				</div>
 				<hr/>
-				<form name="boardChangeOkForm" id="boardChangeOkForm" method="post" action="${ctp}/boardChangeOk.cp?nowPage=${nowPage}&pageSize=${pageSize}">
+				<form name="boardChangeOkForm" id="boardChangeOkForm" method="post" action="${ctp}/boardChangeOk.cp">
 				<div class="row text-center"><!-- 상단 타이틀 입력 -->
 					<div class="col-sm-1 align-self-center p-0">작성자</div>
 					<div class="col-sm-2 align-self-center p-0 m-0"><input type="text" name="nickName" id="nickName" value="${sNickName}" readonly class="form-control"></div>
@@ -138,7 +138,7 @@
 						<input name="delete" id="delete" type="button" value="삭제" onclick="boardDeleteCheck()"  class="form-control" >
 					</div>
 					<div class="col-sm-1 p-0 m-1">	
-						<input name="goBack" id="goBack" type="button" value="이전" onclick="location.href='${ctp}/boardRead.cp?idx=${idx}&pageSize=${pageSize}&nowPage=${nowPage}'" class="form-control" >
+						<input name="goBack" id="goBack" type="button" value="이전" onclick="location.href='${ctp}/boardRead.cp?idx=${idx}&pageSize=${pageSize}&nowPage=${nowPage}&category=${category}'" class="form-control" >
 					</div>
 					<div class="col-sm-4 p-0 m-0"></div>
 				</div>

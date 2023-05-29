@@ -30,6 +30,11 @@ public class AdminController extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/");
 				dispatcher.forward(request, response);
 			}
+			else if(com.equals("/adminPage")) {//운영자 페이지 프론트 이동
+				command = new adminPageCommand();
+				command.execute(request, response);
+				viewPage +="/admin/admin.jsp";
+			}
 			else if(com.equals("/memberManagement")) { //
 				command = new MemberManagementCommand();
 				command.execute(request, response);
@@ -70,6 +75,7 @@ public class AdminController extends HttpServlet {
 				command.execute(request, response);
 				return;
 			}
+			
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);

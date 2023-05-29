@@ -17,7 +17,7 @@ public class TodayArticleWriteCommand implements ProjectInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		String midx = String.valueOf(session.getAttribute("sMIdx")); //다음엔 걍 parseInt로 받아오기
+		String midx = String.valueOf(session.getAttribute("sMIdx")); 
 		String title = request.getParameter("title")==null?"":request.getParameter("title");
 		String article = request.getParameter("article")==null?"":request.getParameter("article");
 		String hostIp = request.getParameter("hostIp")==null?"":request.getParameter("hostIp");

@@ -210,7 +210,7 @@
 				<div class="row">
 					<div class="col-sm-8 text-left"><h3>모임일정</h3></div>
 					<div class="col-sm-4 text-right align-self-center">
-						<c:if test="${sLevel>3}">
+						<c:if test="${sLevel>2}">
 							<input type="button" onclick="location.href='${ctp}/setGetheringPlan.cp'" class="btn grHover" value="모임등록">
 							<input type="button" onclick="location.href='${ctp}/myGetheringList.cp'" class="btn grHover" value="내 모임">
 						</c:if>

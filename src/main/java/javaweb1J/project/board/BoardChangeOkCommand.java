@@ -14,7 +14,8 @@ public class BoardChangeOkCommand implements ProjectInterface {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int nowPage = request.getParameter("nowPage")==null?1:Integer.parseInt(request.getParameter("nowPage")); 
-		int pageSize = request.getParameter("pageSize")==null?5:Integer.parseInt(request.getParameter("pageSize")); 
+		int pageSize = request.getParameter("pageSize")==null?5:Integer.parseInt(request.getParameter("pageSize"));
+
 		HttpSession session = request.getSession();
 		
 		int idx = request.getParameter("idx")==null?0:Integer.parseInt(request.getParameter("idx"));
@@ -40,13 +41,13 @@ public class BoardChangeOkCommand implements ProjectInterface {
 
 		String nickName = (String)session.getAttribute("sNickName");
 		if(check) {
-			request.setAttribute("msg", nickName+"님이 작성하신 글을 "+title+"(으)로 수정하였습니다.");
+			request.setAttribute("msg", nickName+"님이 작성하신 글을 \""+title+"\"(으)로 수정하였습니다.");
 			request.setAttribute("url",request.getContextPath()+"/boardRead.cp?idx="+idx+"&nowPage="+nowPage+"&pageSize="+pageSize);
 			
 		}
 		else {
 			request.setAttribute("msg", nickName+"님, 오류가 발생하여 글이 수정되지 않았습니다.");
-			request.setAttribute("url",request.getContextPath()+"/boardWriteFrom.cp?idx="+idx+"&nowPage="+nowPage+"&pageSize="+pageSize);
+			request.setAttribute("url",request.getContextPath()+"/boardWriteForm.cp?idx="+idx+"&nowPage="+nowPage+"&pageSize="+pageSize);
 		}
 
 	}

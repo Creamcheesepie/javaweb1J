@@ -27,6 +27,7 @@ import javaweb1J.project.board.BoardWriteFormCommand;
 import javaweb1J.project.board.BoardWriteOkCommand;
 import javaweb1J.project.board.boardAticleDeleteCommand;
 import javaweb1J.project.board.boardRecommendUpdateCommand;
+import javaweb1J.project.friend.FriendListCommand;
 import javaweb1J.project.gethering.GetheringInputOkCommand;
 import javaweb1J.project.gethering.GetheringmemberJoinOkCommand;
 import javaweb1J.project.gethering.SetGetheringPlanCommand;
@@ -42,6 +43,7 @@ import javaweb1J.project.member.memberMyInfoUpdateCommand;
 import javaweb1J.project.member.memberNickNameCheckCommand;
 import javaweb1J.project.member.memberPwdResetOkCommand;
 import javaweb1J.project.member.myInfoUpdatePwdCheckCommand;
+import javaweb1J.project.message.MessageListCommand;
 import javaweb1J.project.todayAttendMent.TodayArticleWriteCommand;
 import javaweb1J.project.todayAttendMent.TodayAttendMentChangeCommand;
 import javaweb1J.project.todayAttendMent.TodayAttendMentDeleteCommand;
@@ -250,11 +252,43 @@ public class Controller extends HttpServlet{
 			command.execute(request, response);
 			viewPage +="/gethering/myGetheringList.jsp";
 		}
-		else if(com.equals("/adminPage")) {//운영자 페이지 프론트 이동
-			command = new adminPageCommand();
+		else if(com.equals("/friendList")) {//친구목록 관리
+			command = new FriendListCommand();
 			command.execute(request, response);
-			viewPage +="/admin/admin.jsp";
+			viewPage +="/friend/friendList.jsp";
 		}
+		else if(com.equals("/BanList")) {//차단목록 관리
+			command = new BanListCommand();
+			command.execute(request, response);
+			viewPage +="/friend/banList.jsp";
+		}
+		else if(com.equals("/banCancleOk")) {//차단목록 관리
+			command = new BanCancleOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/messageList")) {//내쪽지목록
+			command = new MessageListCommand();
+			command.execute(request, response);
+			viewPage +="/message/messageList.jsp";
+		}
+		else if(com.equals("/findNick")) {//닉네임 검색
+			command = new findNickCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/sendMessageOk")) {//닉네임 검색
+			command = new sendMessageOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/sMessageList")) {//닉네임 검색
+			command = new SMessageListCommand();
+			command.execute(request, response);
+			viewPage +="/message/sMessageList.jsp";
+		}
+		
+		
 		
 				
 		

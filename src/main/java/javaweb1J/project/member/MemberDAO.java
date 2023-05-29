@@ -382,6 +382,165 @@ public class MemberDAO {
 		
 		return vos;
 	}
+
+	public ArrayList<MemberVO> getfriendList(int idx, int stIndexNo, int pageSize) {
+ ArrayList<MemberVO> vos = new ArrayList<>();
+		 
+		 try {
+			sql = "select m.* "
+					+ "from 		member m,friend f "
+					+ "	where	m.idx=f.fIdx "
+					+ "	and f.mIdx=? "
+					+ "	and f.fnb=1 "
+					+ "order by idx desc "
+					+ "limit ?,? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.setInt(2, stIndexNo);
+			pstmt.setInt(3, pageSize);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MemberVO vo = new MemberVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setSalt(rs.getString("salt"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setName(rs.getString("name"));
+				vo.setNickName(rs.getString("nickName"));
+				
+				vo.setEmail(rs.getString("email"));
+				vo.setTel(rs.getString("tel"));
+				vo.setBirthday(rs.getString("birthday"));
+				vo.setAge(rs.getInt("Age"));
+				vo.setGender(rs.getString("gender"));
+				
+				vo.setAddress(rs.getString("address"));
+				vo.setRideInfo(rs.getString("rideinfo"));
+				vo.setInst(rs.getString("inst"));
+				vo.setPhoto(rs.getString("photo"));
+				vo.setLevel(rs.getInt("level"));
+				
+				vo.setTotCnt(rs.getInt("totCnt"));
+				vo.setTodayCnt(rs.getInt("todayCnt"));
+				vo.setSignInDate(rs.getString("signInDate"));
+				vo.setLastVisit(rs.getString("lastVisit"));
+				vo.setMemberDel(rs.getString("memberDel"));
+				
+				vos.add(vo);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("sql 오류2 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		 
+		return vos;
+	}
+	
+	public ArrayList<MemberVO> getBanList(int idx, int stIndexNo, int pageSize) {
+		ArrayList<MemberVO> vos = new ArrayList<>();
+		
+		try {
+			sql = "select *,"
+					+ " (select fnb from friend where fIdx=? ) "
+					+ " from member "
+					+ " where idx=(select fidx from friend where mIdx=? and fnb=2)"
+					+ " order by idx desc  limit ?,?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.setInt(2, idx);
+			pstmt.setInt(3, stIndexNo);
+			pstmt.setInt(4, pageSize);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MemberVO vo = new MemberVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setSalt(rs.getString("salt"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setName(rs.getString("name"));
+				vo.setNickName(rs.getString("nickName"));
+				
+				vo.setEmail(rs.getString("email"));
+				vo.setTel(rs.getString("tel"));
+				vo.setBirthday(rs.getString("birthday"));
+				vo.setAge(rs.getInt("Age"));
+				vo.setGender(rs.getString("gender"));
+				
+				vo.setAddress(rs.getString("address"));
+				vo.setRideInfo(rs.getString("rideinfo"));
+				vo.setInst(rs.getString("inst"));
+				vo.setPhoto(rs.getString("photo"));
+				vo.setLevel(rs.getInt("level"));
+				
+				vo.setTotCnt(rs.getInt("totCnt"));
+				vo.setTodayCnt(rs.getInt("todayCnt"));
+				vo.setSignInDate(rs.getString("signInDate"));
+				vo.setLastVisit(rs.getString("lastVisit"));
+				vo.setMemberDel(rs.getString("memberDel"));
+				
+				vos.add(vo);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류2 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+		return vos;
+	}
+
+	public int getFriendTotalRecordCount(int idx) {
+		int trc = 0;
+		try {
+			sql="select count(fIdx) as cnt from FRIEND where mIDx=? and fnb=1";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			rs = pstmt.executeQuery();
+			if(rs.next()) trc=rs.getInt("cnt");
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류2 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+		return trc;
+	}
+
+	public int getBanTotalRecordCount(int idx) {
+		int trc = 0;
+		try {
+			sql="select count(fIdx) as cnt from FRIEND where mIDx=? and fnb in ('2','3','4')";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			rs = pstmt.executeQuery();
+			if(rs.next()) trc=rs.getInt("cnt");
+			
+		} catch (SQLException e) {
+			System.out.println("sql 오류2 : " + e.getMessage());
+		} finally {
+			getConn.rsClose();
+		}
+		
+		return trc;
+	}
+
+	public void setDeleteBanMember(int mIdx, int fIdx) {
+		try {
+			sql="delete from friend where mIdx=? and fIdx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mIdx);
+			pstmt.setInt(2, fIdx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("sql 오류2 : " + e.getMessage());
+		} finally {
+			getConn.pstmtClose();
+		}
+	}
 	
 	
 	
