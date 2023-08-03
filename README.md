@@ -6,9 +6,9 @@ javaweb1J project
 <img src="https://github.com/Creamcheesepie/javaweb1J/assets/126214324/3abb5de2-de33-48e2-9842-c7b9ae72473c">
 
 
-[링크 테스트](https://naver.com)
+[프로젝트 링크](http://49.142.157.251:9090/javaweb1J/)
 
-*깃 꾸미기
+*자전거 동호회 프로젝트
  * 첫번째 단락
  * 첫번째 단락!
 
