@@ -2,6 +2,7 @@
 javaweb1J project
 
 🚲ride together🚲
+
 <img src="https://github.com/Creamcheesepie/javaweb1J/assets/126214324/3abb5de2-de33-48e2-9842-c7b9ae72473c">
 
 
