@@ -1,6 +1,8 @@
 ## javaweb1J
 javaweb1J project
 
+🚲ride together🚲
+
 '''java
 public class test(){
    system.out.println("안녕하세요!");
@@ -21,3 +23,5 @@ public class test(){
 성명|국어|수학|영어
 ----|----|----|----|
 감자왕|80|80|65
+
+
