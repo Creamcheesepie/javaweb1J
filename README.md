@@ -2,18 +2,15 @@
 javaweb1J project
 
 🚲ride together🚲
+[20230531_153356](https://github.com/Creamcheesepie/javaweb1J/assets/126214324/3abb5de2-de33-48e2-9842-c7b9ae72473c)
 
-'''java
-public class test(){
-   system.out.println("안녕하세요!");
-}
-'''
 
 [링크 테스트](https://naver.com)
 
 *깃 꾸미기
  * 첫번째 단락
- * 첫번째 단락
+ * 첫번째 단락!
+
    * 두번째 단락
    * 두번째 단락
     *세번째 단락
